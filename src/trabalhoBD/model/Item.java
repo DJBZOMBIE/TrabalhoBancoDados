@@ -7,17 +7,17 @@ public class Item {
 	private Pedido cod_pedido;
 	private float preco;
 	
+	public Item (){
+		this.cod_produto = new Produto();
+		this.cod_pedido = new Pedido();
+	}
+	
 	public float getPreco() {
 		return preco;
 	}
 
 	public void setPreco(float preco) {
 		this.preco = preco;
-	}
-
-	public Item (){
-		this.cod_produto = new Produto();
-		this.cod_pedido = new Pedido();
 	}
 
 	public int getCod() {

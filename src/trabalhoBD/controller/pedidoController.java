@@ -20,7 +20,7 @@ public class pedidoController {
 	
 	public void inserir(Pedido pedido)throws Exception{
 		if(pedido == null){
-			throw new Exception("A pedido não foi instanciado");
+			throw new Exception("O pedido não foi instanciado");
 		}
 		if(pedido.getCod()<=0){
 			throw new Exception("O ID não pode ser negativo");
@@ -44,14 +44,55 @@ public class pedidoController {
 		this.lista.add(pedido);
 	}
 	public void remover(Pedido pedido)throws Exception{
+		if(pedido == null){
+			throw new Exception("O pedido não foi instanciado");
+		}
+		
+		if(pedido.getCod()<=0){
+			throw new Exception("O id não pode ser negativo");
+		}
+		
+		if(this.verificarExistencia(pedido)<0){
+			throw new Exception("este pedido não esta cadastrado ");
+		}
+		this.lista.remove(this.verificarExistencia(pedido));
 		
 	}
 	public void atualizar(Pedido pedido)throws Exception{
+		if(pedido == null){
+			throw new Exception("O pedido não foi instanciado");
+		}
+		if(pedido.getCod()<=0){
+			throw new Exception("O ID não pode ser negativo");
+		}
+		if(pedido.getData()==null){
+			throw new Exception("Informar a data do pedido");
+		}
+		if(pedido.getData().equals("")){
+			throw new Exception("Informar a data do pedido");
+		}
+		if(pedido.getItem().size()<=0){
+			throw new Exception("Informar pelo menos um item para o pedido");
+		}
+		if(pedido.getCod_cliente()<=0){
+			throw new Exception("O ID não pode ser negativo");
+		}
 		
+		if(this.verificarExistencia(pedido)>=0){
+			throw new Exception("O pedido já foi cadastrado");
+		}
+		this.lista.set(this.verificarExistencia(pedido),pedido);
 	}
 	
 	public int verificarExistencia(Pedido pedido){  //se der algum erro mudar esse metodo
-		
+		int retorno = -1;
+		for(Pedido ped: lista){
+			if(pedido.getCod() == ped.getCod()){
+				retorno = ped.getCod();
+				break;
+			}
+		}
+		return retorno;
 	}
 	
 	//calcular o valor total do pedido

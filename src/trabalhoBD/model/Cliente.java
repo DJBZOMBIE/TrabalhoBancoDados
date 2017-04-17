@@ -5,6 +5,13 @@ public class Cliente {
 	private String nome;
 	private String email;
 	private String cpf;
+	
+	public Cliente(int string, String string2, String string3, String string4) {
+		this.cod = string;
+		this.nome = string2;
+		this.cpf = string3;
+		this.email = string4;
+	}
 	public String getCpf() {
 		return cpf;
 	}
@@ -28,5 +35,9 @@ public class Cliente {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String toString() {
+		return cod + " - " + nome + " - " + cpf + " - " + email;
 	}
 }

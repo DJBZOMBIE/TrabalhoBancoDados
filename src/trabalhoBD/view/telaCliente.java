@@ -2,6 +2,8 @@ package trabalhoBD.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -33,19 +35,53 @@ public class telaCliente extends JFrame{
 	
 	public void init(){
 		pnBase.setLayout(new BorderLayout());
-		pnBase.add(pnTab, BorderLayout.SOUTH);
+		pnBase.add(pnTab, BorderLayout.CENTER);
 		pnBase.add(pnBot, BorderLayout.SOUTH);
 		
 		
 		configurePnTable();
-		
+		configurePnBot();
 		
 		super.setContentPane(pnBase);
 		super.pack();
-		super.setTitle("Cadastro Cliente");
-		super.setSize(new Dimension(500, 300));
+		super.setTitle("Tela Cliente");
+		super.setSize(new Dimension(600, 500));
 		super.setVisible(true);
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //quando clicar em fechar não irá fechar o form principal
+	}
+	
+	public void configurePnBot(){
+		
+		pnBase.setLayout(new GridBagLayout());
+		
+		GridBagConstraints restricoes = new GridBagConstraints();
+		restricoes.gridx = 1;
+		restricoes.gridy = 0;
+		restricoes.gridwidth = 1;
+		restricoes.gridheight = 2;
+		pnBot.add(btList, restricoes);
+		
+		restricoes.gridx = 2; //coluna
+		restricoes.gridy = 0; //linha
+		restricoes.gridwidth = 1;
+		restricoes.gridheight = 2;
+		
+		pnBot.add(btNovo, restricoes);
+		
+		restricoes.gridx = 3; //coluna
+		restricoes.gridy = 0; //linha
+		restricoes.gridwidth = 1;
+		restricoes.gridheight = 2;
+		
+		pnBot.add(btAlt, restricoes);
+		
+		restricoes.gridx = 4; //coluna
+		restricoes.gridy = 0; //linha
+		restricoes.gridwidth = 1;
+		restricoes.gridheight = 2;
+		
+		pnBot.add(btRemove, restricoes);
+		
 	}
 	public void configurePnTable(){
 		
@@ -58,6 +94,13 @@ public class telaCliente extends JFrame{
 		
 		JScrollPane scroll = new JScrollPane(table);
 		pnBase.add(scroll);
+		
+		super.setContentPane(pnTab);
+		super.pack();
+		super.setTitle("Tela Cliente");
+		super.setSize(new Dimension(400, 200));
+		super.setVisible(true);
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 }

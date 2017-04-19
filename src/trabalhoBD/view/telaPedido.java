@@ -65,7 +65,6 @@ public class telaPedido extends JFrame{
 		pnBase.add(pnTab2,gbc10);
 		
 		super.setTitle("Tela Pedidos");
-		super.setSize(200, 300);
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
@@ -77,7 +76,6 @@ public class telaPedido extends JFrame{
 		JScrollPane scroll = new JScrollPane(table);
 		GridBagLayout layoutData = new GridBagLayout();
 		pnTab2.setLayout(layoutData);
-		
 		GBC gbc1 = new GBC(1,1).setSpan(1, 1);
 		GBC gbc2 = new GBC(2,1).setSpan(3, 1);
 		GBC gbc8 = new GBC(5,1).setSpan(1, 1);
@@ -104,7 +102,7 @@ public class telaPedido extends JFrame{
 		
 		
 		
-		super.setSize(300, 400);
+		
 		super.setContentPane(pnTab2);
 		super.setVisible(true);
 		super.pack();
@@ -125,7 +123,7 @@ public class telaPedido extends JFrame{
 		
 		
 		//super.setTitle("Tela Cliente");
-		//super.setSize(300, 400);
+		super.setSize(300, 400);
 		super.setContentPane(pnTab);
 		super.setVisible(true);
 		super.pack();

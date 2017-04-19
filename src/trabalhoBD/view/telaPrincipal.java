@@ -41,7 +41,7 @@ public class telaPrincipal extends JFrame {
 		
 		GridBagConstraints restricoes = new GridBagConstraints();
 		restricoes.gridx = 1;
-		restricoes.gridy = 0;
+		restricoes.gridy = 1;
 		restricoes.gridwidth = 1;
 		restricoes.gridheight = 2;
 		pnMain.add(btCli, restricoes);

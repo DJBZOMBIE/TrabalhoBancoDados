@@ -1,13 +1,18 @@
 package trabalhoBD.run;
 
+import trabalhoBD.view.tableFrame;
 import trabalhoBD.view.telaCliente;
+import trabalhoBD.view.telaPedido;
 import trabalhoBD.view.telaPrincipal;
+import trabalhoBD.view.telaProduto;
 
 public class Runner {
 	
 	public static void main (String[] args){
 		telaPrincipal screen = new telaPrincipal();
 		telaCliente screen2 = new telaCliente();
-		screen2.init();
+		telaProduto screen3 = new telaProduto();
+		telaPedido screen4 = new telaPedido();
+		screen4.init();
 	}
 }

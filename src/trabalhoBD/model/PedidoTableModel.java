@@ -2,16 +2,18 @@ package trabalhoBD.model;
 
 import java.util.ArrayList;
 
+
 import javax.swing.table.DefaultTableModel;
 
-public class ClienteTableModel extends DefaultTableModel{
-	private ArrayList<Cliente> internalList;
-	private String[] header = new String[] {"ID", "Nome", "cpf", "email"};
+public class PedidoTableModel extends DefaultTableModel {
+	private ArrayList<Pedido> internalList;
+	private String[] header = new String[] {"ID", "Data", "Código do Cliente", "Total"};
 	
-	public ClienteTableModel(ArrayList<Cliente> newList){
+	public PedidoTableModel(ArrayList<Pedido> newList){
 		this.internalList = newList;
 	}
-	public Cliente getElementAt(int index){
+	
+	public Pedido getElementAt(int index){
 		return internalList.get(index);
 	}
 	
@@ -35,25 +37,24 @@ public class ClienteTableModel extends DefaultTableModel{
 	}
 	
 	public Object getValueAt(int row, int column){
-		Cliente cli = internalList.get(row);
+		Pedido ped= internalList.get(row);
 		if(column == 0){
-			return cli.getCod();
+			return ped.getCod();
 		}else if(column == 1){
-			return cli.getNome();
+			return ped.getData();
 		}else if(column == 2){
-			return cli.getCpf();
+			return ped.getCod_cliente();
 		}else{
-			return cli.getEmail();
+			return ped.getItem();
 		}
 	}
 	
-	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
-	public Cliente getProdutoAt(int row) {
-		// TODO Auto-generated method stub
+	public Pedido getProdutoAt(int row) {
+		
 		return internalList.get(row);
 	}
 }

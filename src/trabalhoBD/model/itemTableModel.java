@@ -2,16 +2,18 @@ package trabalhoBD.model;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
-public class ClienteTableModel extends DefaultTableModel{
-	private ArrayList<Cliente> internalList;
-	private String[] header = new String[] {"ID", "Nome", "cpf", "email"};
+public class itemTableModel extends DefaultTableModel {
+	private ArrayList<Item> internalList;
+	private String[] header = new String[] {"ID", "Preço", "Quantidade", "Código do Pedido","Código do Produto"};
 	
-	public ClienteTableModel(ArrayList<Cliente> newList){
+	public itemTableModel(ArrayList<Item> newList){
 		this.internalList = newList;
 	}
-	public Cliente getElementAt(int index){
+	
+	public Item getElementAt(int index){
 		return internalList.get(index);
 	}
 	
@@ -35,25 +37,26 @@ public class ClienteTableModel extends DefaultTableModel{
 	}
 	
 	public Object getValueAt(int row, int column){
-		Cliente cli = internalList.get(row);
+		Item it = internalList.get(row);
 		if(column == 0){
-			return cli.getCod();
+			return it.getCod();
 		}else if(column == 1){
-			return cli.getNome();
+			return it.getPreco();
 		}else if(column == 2){
-			return cli.getCpf();
+			return it.getQuantidade();
+		}else if(column == 3){
+			return it.getCod_pedido();
 		}else{
-			return cli.getEmail();
+			return it.getCod_produto();
 		}
 	}
 	
-	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
-	public Cliente getProdutoAt(int row) {
-		// TODO Auto-generated method stub
+	public Item getProdutoAt(int row) {
+		
 		return internalList.get(row);
 	}
 }

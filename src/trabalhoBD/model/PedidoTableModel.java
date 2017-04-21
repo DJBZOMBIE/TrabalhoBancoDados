@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PedidoTableModel extends DefaultTableModel {
 	private ArrayList<Pedido> internalList;
-	private String[] header = new String[] {"ID", "Data", "Código do Cliente", "Total"};
+	private String[] header = new String[] {"ID", "Data", "Código do Cliente", "Código Item"};
 	
 	public PedidoTableModel(ArrayList<Pedido> newList){
 		this.internalList = newList;
@@ -45,7 +45,7 @@ public class PedidoTableModel extends DefaultTableModel {
 		}else if(column == 2){
 			return ped.getCod_cliente();
 		}else{
-			return ped.getItem();
+			return ped.getCod_Item();
 		}
 	}
 	

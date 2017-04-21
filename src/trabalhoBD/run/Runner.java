@@ -1,11 +1,15 @@
 package trabalhoBD.run;
 
+import javax.swing.JComboBox;
+
 import trabalhoBD.view.tableFrame;
 import trabalhoBD.view.telaAlterarCliente;
 import trabalhoBD.view.telaAlterarProduto;
 import trabalhoBD.view.telaCadastroCliente;
+import trabalhoBD.view.telaCadastroPedido;
 import trabalhoBD.view.telaCadastroProduto;
 import trabalhoBD.view.telaCliente;
+import trabalhoBD.view.telaEntradaEstoque;
 import trabalhoBD.view.telaPedido;
 import trabalhoBD.view.telaPrincipal;
 import trabalhoBD.view.telaProduto;
@@ -23,6 +27,10 @@ public class Runner {
 		telaAlterarCliente cli2 = new telaAlterarCliente();
 		telaCadastroProduto prod = new telaCadastroProduto();
 		telaAlterarProduto prod2 = new telaAlterarProduto();
-		screen2.init();
+		
+		telaCadastroPedido cadPedido = new telaCadastroPedido();
+		
+		telaEntradaEstoque entrada = new telaEntradaEstoque();
+		entrada.init();
 	}
 }

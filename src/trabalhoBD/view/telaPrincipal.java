@@ -17,6 +17,7 @@ public class telaPrincipal extends JFrame {
 	private JButton btCli = new JButton("Clientes");
 	private JButton btPro = new JButton("Produtos");
 	private JButton btPed = new JButton("Pedidos");
+	private JButton btEntrada = new JButton("Entrada de Estoque");
 	
 	public telaPrincipal(){
 		
@@ -25,15 +26,15 @@ public class telaPrincipal extends JFrame {
 	public void init(){
 		
 		configurePnBase();
-		centralizeFrame();
 		
+		/*DEIXAR MELHOR SAPORRA DEPOIS*/
 		pnBase.setLayout(new BorderLayout());
-		pnBase.add(pnMain,BorderLayout.CENTER);
+		pnBase.add(pnMain,BorderLayout.SOUTH);
 		super.setContentPane(pnBase);
 		super.pack();
 		super.setTitle("Tela Principal");
 		super.setVisible(true);
-		super.setSize(400, 300);
+		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -61,16 +62,15 @@ public class telaPrincipal extends JFrame {
 		restricoes.gridheight = 2;
 		
 		pnMain.add(btPed, restricoes);
+		
+		restricoes.gridx = 4; //coluna
+		restricoes.gridy = 0; //linha
+		restricoes.gridwidth = 1;
+		restricoes.gridheight = 2;
+		
+		pnMain.add(btEntrada, restricoes);
+		
 	}
 	
-	//centralizar a tela no desktop
-	public void centralizeFrame(){
-		int x, y;
-		
-		Rectangle scr = this.getGraphicsConfiguration().getBounds();
-		Rectangle form = this.getBounds();
-		x = (int) (scr.getWidth() - form.getWidth()) / 2;
-		y = (int) (scr.getHeight() - form.getHeight())/2;
-		this.setLocation(x,y);
-	}
+
 }

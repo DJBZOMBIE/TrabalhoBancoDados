@@ -8,10 +8,13 @@ public class Pedido {
 	private int cod;
 	private Date data;
 	private int cod_cliente;
-	private ArrayList<Item> item;
+	private int cod_item;
 	
-	public Pedido(){
-		this.item = new ArrayList<Item>();
+	public Pedido(int code, Date data, int cod_cliente, int cod_item){
+		this.cod = code;
+		this.data = data;
+		this.cod_cliente = cod_cliente;
+		this.cod_item = cod_item;
 	}
 
 	public int getCod() {
@@ -39,12 +42,12 @@ public class Pedido {
 		this.cod_cliente = cod_cliente;
 	}
 
-	public ArrayList<Item> getItem() {
-		return item;
+	public int getCod_Item() {
+		return cod_item;
 	}
 
-	public void setItem(ArrayList<Item> item) {
-		this.item = item;
+	public void setCod_Item(int cod_item) {
+		this.cod_item = cod_item;
 	}
 
 	

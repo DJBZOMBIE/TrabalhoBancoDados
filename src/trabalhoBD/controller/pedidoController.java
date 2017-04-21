@@ -31,7 +31,7 @@ public class pedidoController {
 		if(pedido.getData().equals("")){
 			throw new Exception("Informar a data do pedido");
 		}
-		if(pedido.getItem().size()<=0){
+		if(pedido.getCod_Item()<=0){
 			throw new Exception("Informar pelo menos um item para o pedido");
 		}
 		if(pedido.getCod_cliente()<=0){
@@ -71,7 +71,7 @@ public class pedidoController {
 		if(pedido.getData().equals("")){
 			throw new Exception("Informar a data do pedido");
 		}
-		if(pedido.getItem().size()<=0){
+		if(pedido.getCod_Item()<=0){
 			throw new Exception("Informar pelo menos um item para o pedido");
 		}
 		if(pedido.getCod_cliente()<=0){

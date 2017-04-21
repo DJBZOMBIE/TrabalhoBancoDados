@@ -4,12 +4,11 @@ public class Item {
 	private int cod;
 	private Produto cod_produto;
 	private int quantidade;
-	private Pedido cod_pedido;
+	private int cod_pedido;
 	private float preco;
 	
 	public Item (){
 		this.cod_produto = new Produto();
-		this.cod_pedido = new Pedido();
 	}
 	
 	public float getPreco() {
@@ -44,11 +43,11 @@ public class Item {
 		this.quantidade = quantidade;
 	}
 
-	public Pedido getCod_pedido() {
+	public int getCod_pedido() {
 		return cod_pedido;
 	}
 
-	public void setCod_pedido(Pedido cod_pedido) {
+	public void setCod_pedido(int cod_pedido) {
 		this.cod_pedido = cod_pedido;
 	}
 	

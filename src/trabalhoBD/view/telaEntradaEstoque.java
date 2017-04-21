@@ -3,7 +3,6 @@ package trabalhoBD.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -14,90 +13,80 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import trabalhoBD.controller.clienteController;
-import trabalhoBD.model.Cliente;
+import trabalhoBD.controller.produtoController;
+import trabalhoBD.model.Produto;
 
-public class telaCadastroCliente extends JFrame{
+public class telaEntradaEstoque extends JFrame {
+	private produtoController controller;
+	private ArrayList<Produto> newList = new ArrayList<Produto>();
 	
-	private clienteController controller;
-	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
-	
-	private JLabel lbCod = new JLabel("Código:");
-	private JLabel lbNome = new JLabel("Nome:");
-	private JLabel lbCpf = new JLabel("CPF:");
-	private JLabel lbEmail = new JLabel("E-Mail:");
+	private JLabel lbCod = new JLabel("Código do Produto:");
+	private JLabel lbQuantidade = new JLabel("Quantidade");
 	
 	private JTextField txCod = new JTextField(10);
-	private JTextField txNome = new JTextField(20);
-	private JTextField txCpf= new JTextField(14);
-	private JTextField txEmail= new JTextField(20);
+	private JTextField txQuantidade = new JTextField(20);
+	
 	private JPanel pnBase = new JPanel();
 	private JPanel pnBot = new JPanel();
 	private JPanel pnMain = new JPanel();
-	private JButton btSalvar = new JButton("Salvar");
+	
+	private JButton btSalvar = new JButton("Enviar");
 	private JButton btCancelar = new JButton("Cancelar");
 	
-	public telaCadastroCliente(){
+	
+	public telaEntradaEstoque(){
 		this.controller = controller;
 	}
 	
 	public void init(){
+		
 		configurePnBase();
 		configurePnBotao();
 		
 		
-		
+		GridBagLayout layoutData = new GridBagLayout();
+		pnMain.setLayout(layoutData);
 		
 		GBC gbc10 = new GBC(2,2);
-		GBC gbc11 = new GBC(2,5);
+		GBC gbc11 = new GBC(2,6);
 		pnMain.add(pnBase,gbc10);
 		pnMain.add(pnBot,gbc11);
 		
-		super.setTitle("Novo Cliente");
-	
+		super.setTitle("Estoque");
 		super.setContentPane(pnMain);
 		super.setVisible(true);
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.pack();
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
 	public void configurePnBase(){
 		
 		GridBagLayout layoutData3 = new GridBagLayout();
 		pnBase.setLayout(layoutData3);
 		
 		GBC gbc1 = new GBC(1,1).setSpan(1, 3);
-		GBC gbc2 = new GBC(2,1).setSpan(4, 3);
-		GBC gbc3 = new GBC(1,5).setSpan(1, 3);
-		GBC gbc4 = new GBC(2,5).setSpan(3, 3);
-		GBC gbc5 = new GBC(1,8).setSpan(1, 3);
-		GBC gbc6 = new GBC(2,8).setSpan(6, 3);
-	
+		GBC gbc2 = new GBC(2,1).setSpan(1, 3);
+		GBC gbc3 = new GBC(1,4).setSpan(1, 3);
+		GBC gbc4 = new GBC(2,4).setSpan(1, 3);
 		
-		
-		pnBase.add(lbNome,gbc1);
-		pnBase.add(txNome,gbc2);
-		pnBase.add(lbCpf,gbc3);
-		pnBase.add(txCpf,gbc4);
-		pnBase.add(lbEmail,gbc5);
-		pnBase.add(txEmail,gbc6);
-		
-		
+		pnBase.add(lbCod,gbc1);
+		pnBase.add(txCod,gbc2);
+		pnBase.add(lbQuantidade,gbc3);
+		pnBase.add(txQuantidade,gbc4);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
-		TitledBorder border = new TitledBorder(colorBorder, "Cadastro de Clientes");
+		TitledBorder border = new TitledBorder(colorBorder, "Entrada de Estoque");
 		pnBase.setBorder(border);
 		
-		//super.setTitle("Novo Cliente");
 		super.setSize(400, 300);
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
-		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void configurePnBotao(){
+		
 		GridBagLayout layoutData2 = new GridBagLayout();
 		pnBot.setLayout(layoutData2);
 		
@@ -111,6 +100,4 @@ public class telaCadastroCliente extends JFrame{
 		super.setVisible(true);
 		super.pack();
 	}
-	
-
 }

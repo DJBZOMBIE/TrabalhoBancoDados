@@ -1,6 +1,7 @@
 package trabalhoBD.view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
@@ -32,8 +33,9 @@ public class telaPrincipal extends JFrame {
 		super.pack();
 		super.setTitle("Tela Principal");
 		super.setVisible(true);
+		super.setSize(400, 300);
+		super.setLocationRelativeTo(null);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		super.setSize(406, 238);
 	}
 	
 	private void configurePnBase(){

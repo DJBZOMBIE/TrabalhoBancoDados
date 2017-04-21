@@ -1,7 +1,10 @@
 package trabalhoBD.run;
 
 import trabalhoBD.view.tableFrame;
+import trabalhoBD.view.telaAlterarCliente;
+import trabalhoBD.view.telaAlterarProduto;
 import trabalhoBD.view.telaCadastroCliente;
+import trabalhoBD.view.telaCadastroProduto;
 import trabalhoBD.view.telaCliente;
 import trabalhoBD.view.telaPedido;
 import trabalhoBD.view.telaPrincipal;
@@ -17,6 +20,9 @@ public class Runner {
 		
 		//==============
 		telaCadastroCliente cli = new telaCadastroCliente();
-		cli.init();
+		telaAlterarCliente cli2 = new telaAlterarCliente();
+		telaCadastroProduto prod = new telaCadastroProduto();
+		telaAlterarProduto prod2 = new telaAlterarProduto();
+		screen2.init();
 	}
 }

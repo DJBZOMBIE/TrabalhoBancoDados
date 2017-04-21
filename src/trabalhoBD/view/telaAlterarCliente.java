@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import trabalhoBD.controller.clienteController;
 import trabalhoBD.model.Cliente;
 
-public class telaCadastroCliente extends JFrame{
+public class telaAlterarCliente extends JFrame{
 	
 	private clienteController controller;
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
@@ -37,7 +37,7 @@ public class telaCadastroCliente extends JFrame{
 	private JButton btSalvar = new JButton("Salvar");
 	private JButton btCancelar = new JButton("Cancelar");
 	
-	public telaCadastroCliente(){
+	public telaAlterarCliente(){
 		this.controller = controller;
 	}
 	
@@ -54,8 +54,7 @@ public class telaCadastroCliente extends JFrame{
 		pnMain.add(pnBase,gbc10);
 		pnMain.add(pnBot,gbc11);
 		
-		super.setTitle("Novo Cliente");
-	
+		super.setTitle("Alteração de Cliente");
 		super.setContentPane(pnMain);
 		super.setVisible(true);
 		super.setPreferredSize(new Dimension(420,250));
@@ -86,7 +85,7 @@ public class telaCadastroCliente extends JFrame{
 		
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
-		TitledBorder border = new TitledBorder(colorBorder, "Cadastro de Clientes");
+		TitledBorder border = new TitledBorder(colorBorder, "Alteração de Cliente");
 		pnBase.setBorder(border);
 		
 		//super.setTitle("Novo Cliente");

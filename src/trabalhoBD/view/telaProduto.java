@@ -50,11 +50,12 @@ public class telaProduto extends JFrame {
 		GBC gbc10 = new GBC(1,1);
 		pnBase.add(pnProd,gbc10);
 		
-		super.setTitle("Tela Pedidos");
+		super.setTitle("Tela Produtos");
 		super.setSize(200, 300);
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
+		super.setLocationRelativeTo(null);
 		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}

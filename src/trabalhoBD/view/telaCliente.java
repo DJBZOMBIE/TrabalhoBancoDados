@@ -67,6 +67,7 @@ public class telaCliente extends JFrame{
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
+		super.setLocationRelativeTo(null);
 		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //quando clicar em fechar não irá fechar o form principal
 	}
@@ -95,7 +96,7 @@ public class telaCliente extends JFrame{
 		pnTab.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
-		TitledBorder border = new TitledBorder(colorBorder, "Clientes");
+		TitledBorder border = new TitledBorder(colorBorder, "Cliente");
 		pnTab.setBorder(border);
 		
 		

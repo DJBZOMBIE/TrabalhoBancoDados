@@ -68,6 +68,7 @@ public class telaPedido extends JFrame{
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
+		super.setLocationRelativeTo(null);
 		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}

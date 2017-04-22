@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -21,7 +22,7 @@ import trabalhoBD.model.Cliente;
 
 public class telaCadastroCliente extends JFrame{
 	
-	private clienteController controller;
+	private clienteController controller = new clienteController();
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
 	
 	private JLabel lbCod = new JLabel("Código:");
@@ -48,7 +49,7 @@ public class telaCadastroCliente extends JFrame{
 		configurePnBotao();
 		
 		configureBtCancelar();
-		
+		configureBtSalvar();
 		
 		GBC gbc10 = new GBC(2,2);
 		GBC gbc11 = new GBC(2,5);
@@ -129,5 +130,34 @@ public class telaCadastroCliente extends JFrame{
 				this.dispose();
 				
 			}
+			
+			//botao salvar
+			private void configureBtSalvar(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtonSalvarActionPerformed(e);
+						}
+					};
+						btSalvar.addActionListener(lstAutenticacao);
+					}
+					
+					public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){	
+						try{
+							
+							Cliente cliente = new Cliente();
+							cliente.setNnome(txNome.getText());
+							cliente.setEmail(txEmail.getText());
+							cliente.setCpf(txCpf.getText());
+							controller.inserir(cliente);
+							
+							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+							
+						}catch(Exception ex){
+							
+							JOptionPane.showMessageDialog(null, "Erro");
+						}
+						
+					}
 
 }

@@ -11,6 +11,7 @@ import trabalhoBD.model.Cliente;
 public class clienteController {
 	private ArrayList<Cliente> lista;
 	private Conexao conectar;
+	
 	public clienteController(){
 		this.lista = new ArrayList<Cliente>();
 		this.conectar = new Conexao();
@@ -155,11 +156,15 @@ public class clienteController {
 			throw new Exception("Informar o email do cliente");
 		}
 		
+		//tirar ou não do programa ?
 		if(this.verificaExistencia(cliente) == -1){
 			throw new Exception("Este cliente não esta cadastrado");
 		}
 		this.lista.set(this.verificaExistencia(cliente), cliente);
 	}
+	
+	
+	
 	
 	//voltar nesse metodo depois
 	//pesquisar id do objeto e retornar o indice do objeto

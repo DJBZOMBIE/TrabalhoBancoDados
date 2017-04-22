@@ -3,6 +3,8 @@ package trabalhoBD.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -14,11 +16,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import trabalhoBD.controller.produtoController;
+
 import trabalhoBD.model.Produto;
 
 public class telaEntradaEstoque extends JFrame {
 	private produtoController controller;
 	private ArrayList<Produto> newList = new ArrayList<Produto>();
+
 	
 	private JLabel lbCod = new JLabel("Código do Produto:");
 	private JLabel lbQuantidade = new JLabel("Quantidade");
@@ -43,6 +47,7 @@ public class telaEntradaEstoque extends JFrame {
 		configurePnBase();
 		configurePnBotao();
 		
+		configureBtCancelar();
 		
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
@@ -55,9 +60,11 @@ public class telaEntradaEstoque extends JFrame {
 		super.setTitle("Estoque");
 		super.setContentPane(pnMain);
 		super.setVisible(true);
+		super.pack();
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
-		super.pack();
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 	}
 	
 	public void configurePnBase(){
@@ -100,4 +107,23 @@ public class telaEntradaEstoque extends JFrame {
 		super.setVisible(true);
 		super.pack();
 	}
+	
+	
+	//botao cancelar
+		private void configureBtCancelar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonCancelarActionPerformed(e);
+				}
+			};
+			
+			btCancelar.addActionListener(lstAutenticacao);
+		}
+		
+		
+		public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt){	
+			this.dispose();
+			
+		}
 }

@@ -2,6 +2,7 @@ package trabalhoBD.run;
 
 import javax.swing.JComboBox;
 
+
 import trabalhoBD.view.tableFrame;
 import trabalhoBD.view.telaAlterarCliente;
 import trabalhoBD.view.telaAlterarProduto;
@@ -31,6 +32,6 @@ public class Runner {
 		telaCadastroPedido cadPedido = new telaCadastroPedido();
 		
 		telaEntradaEstoque entrada = new telaEntradaEstoque();
-		entrada.init();
+		screen.init();
 	}
 }

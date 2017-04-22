@@ -6,11 +6,11 @@ public class Cliente {
 	private String email;
 	private String cpf;
 	
-	public Cliente(int string, String string2, String string3, String string4) {
-		this.cod = string;
-		this.nome = string2;
-		this.cpf = string3;
-		this.email = string4;
+	public Cliente() {
+		this.cod = cod;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
 	}
 	public String getCpf() {
 		return cpf;
@@ -38,6 +38,6 @@ public class Cliente {
 	}
 	
 	public String toString() {
-		return cod + " - " + nome + " - " + cpf + " - " + email;
+		return cod + " - " + nome + " - " + email + " - " + cpf;
 	}
 }

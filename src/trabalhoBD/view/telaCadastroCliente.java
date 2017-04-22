@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -45,7 +47,7 @@ public class telaCadastroCliente extends JFrame{
 		configurePnBase();
 		configurePnBotao();
 		
-		
+		configureBtCancelar();
 		
 		
 		GBC gbc10 = new GBC(2,2);
@@ -112,5 +114,20 @@ public class telaCadastroCliente extends JFrame{
 		super.pack();
 	}
 	
+	//botao cancelar
+	private void configureBtCancelar(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButtonCancelarActionPerformed(e);
+				}
+			};
+				btCancelar.addActionListener(lstAutenticacao);
+			}
+			
+			public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt){	
+				this.dispose();
+				
+			}
 
 }

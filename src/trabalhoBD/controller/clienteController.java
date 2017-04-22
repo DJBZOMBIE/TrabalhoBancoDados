@@ -1,18 +1,43 @@
 package trabalhoBD.controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
 
 public class clienteController {
 	private ArrayList<Cliente> lista;
-	
+	private Conexao conectar;
 	public clienteController(){
 		this.lista = new ArrayList<Cliente>();
+		this.conectar = new Conexao();
 	}
 	
-	public ArrayList <Cliente> listarTodos(){
-		return this.lista;	
+	public ArrayList <Cliente> listarTodos() throws Exception{
+		//abrindo conexao
+		Statement conex = conectar.conectar();
+		ArrayList<Cliente> retorno = new ArrayList<Cliente>();
+		
+		String sql = "SELECT cod, nome, email, cpf FROM cliente ORDER BY nome";
+		try{
+			ResultSet rs = conex.executeQuery(sql);
+			while(rs.next()){
+				Cliente cliente = new Cliente();
+				cliente.setCod(rs.getInt("cod"));
+				cliente.setNnome(rs.getString("nome"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setCpf(rs.getString("cpf"));
+				retorno.add(cliente);
+			}
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar consulta: " + e.getMessage());
+		}
+		conectar.desconectar();
+		
+		return retorno;	
 	}
 	
 	//inserir cliente
@@ -46,6 +71,18 @@ public class clienteController {
 			throw new Exception("Informar o email do cliente");
 		}
 		
+		//abrindo conexão
+		Statement conex = conectar.conectar();
+		
+		String sql = "INSERT INTO cliente (nome, email, cpf)";sql += "VALUES('"+cliente.getNome() + "', '" + cliente.getEmail()+"', '" + cliente.getCpf() + "')";
+		
+		try{
+			conex.execute(sql);
+		}catch (SQLException e){
+			throw new Exception("Erro ao inserir: " + e.getMessage());
+		}
+		conectar.desconectar();
+		
 		if(this.verificaExistencia(cliente)>=0){
 			throw new Exception("Este cliente já esta cadastrado");
 		}
@@ -67,9 +104,26 @@ public class clienteController {
 		}
 		
 		
+		
+		//abrinco conexao
+		Statement conex = conectar.conectar();
+		
+		//instrução sql correspondente a remoção do cliente
+		String sql = "DELETE FROM cliente where cpf = '" + cliente.getCpf() + "'";
+		
+		try{
+			//executando a intrução sql
+			conex.execute(sql);
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar remoção: "+e.getMessage());
+		}
+		
+		//error
 		if(this.verificaExistencia(cliente)== -1){
 			throw new Exception("Este cliente não esta cadastrado");
 		}
+		conectar.desconectar();
+		
 		this.lista.remove(this.verificaExistencia(cliente));
 	}
 	
@@ -101,12 +155,13 @@ public class clienteController {
 			throw new Exception("Informar o email do cliente");
 		}
 		
-		if(this.verificaExistencia(cliente)== -1){
+		if(this.verificaExistencia(cliente) == -1){
 			throw new Exception("Este cliente não esta cadastrado");
 		}
 		this.lista.set(this.verificaExistencia(cliente), cliente);
 	}
 	
+	//voltar nesse metodo depois
 	//pesquisar id do objeto e retornar o indice do objeto
 	public int verificaExistencia(Cliente cliente){
 		int retorno = -1;
@@ -117,5 +172,15 @@ public class clienteController {
 			}
 		}
 		return retorno;
+		
+		/*for(int i = 0; i < this.lista.size(); i++){
+			if(cliente.getCpf().trim().equals(this.lista.get(i).getCpf().trim())){
+				retorno = i;
+				System.out.println("retorno(dentro if):");
+			}
+		}
+		
+		
+		return retorno;*/
 	}
 }

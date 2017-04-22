@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -45,6 +47,7 @@ public class telaAlterarCliente extends JFrame{
 		configurePnBase();
 		configurePnBotao();
 		
+		configureBtCancelar();
 		
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
@@ -60,6 +63,7 @@ public class telaAlterarCliente extends JFrame{
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.pack();
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public void configurePnBase(){
 		
@@ -111,5 +115,21 @@ public class telaAlterarCliente extends JFrame{
 		super.pack();
 	}
 	
+	
+	//botao cancelar
+	private void configureBtCancelar(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButtonCalcelarActionPerfomed(e);
+			}
+		};
+		
+		btCancelar.addActionListener(lstAutenticacao);
+	}
+	
+	private void JButtonCalcelarActionPerfomed(java.awt.event.ActionEvent evt){
+		this.dispose();
+	}
 
 }

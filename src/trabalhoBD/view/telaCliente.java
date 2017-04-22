@@ -26,13 +26,16 @@ import javax.swing.table.TableModel;
 
 
 import trabalhoBD.controller.clienteController;
+
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.ClienteTableModel;
 
 public class telaCliente extends JFrame{
-	private clienteController controller;
+	private clienteController controller = new clienteController();
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
+	
 	private ClienteTableModel model = new ClienteTableModel(newList);
+	private telaPrincipal tela = new telaPrincipal();
 	private JTable table = new JTable(model);
 	private JLabel lbCod = new JLabel("Pesquisar (por CPF)");
 	private JTextField txCod = new JTextField(20);
@@ -49,13 +52,18 @@ public class telaCliente extends JFrame{
 
 	
 	public telaCliente(){
-		this.controller = controller;
+		
 	}
 	
 	public void init(){
 		configurePnTab();
 		centralizeFrame(); 
 		
+		configureBtEntrada();
+		configureBtAlterar();
+		configureBtRemover();
+		configureBtListar();
+		configureBtInserir();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
@@ -76,6 +84,8 @@ public class telaCliente extends JFrame{
 		
 		JScrollPane scroll = new JScrollPane(table);
 		GridBagLayout layoutData = new GridBagLayout();
+		
+		
 		pnTab.setLayout(layoutData);
 		
 		GBC gbc1 = new GBC(1,1).setSpan(1, 1);
@@ -123,60 +133,129 @@ public class telaCliente extends JFrame{
 		this.setLocation(x,y);
 	}
 	
-	/*public void configurePnBot(){
+	
+	//cahamar tela cadastroCliente
+	private void configureBtEntrada(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButtomNovoClienteActionPerfomed(e);
+			}
+		};
 		
-		pnBase.setLayout(new GridBagLayout());
-		
-		GridBagConstraints restricoes = new GridBagConstraints();
-		restricoes.gridx = 1;
-		restricoes.gridy = 0;
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		pnBot.add(btList, restricoes);
-		
-		restricoes.gridx = 2; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		
-		pnBot.add(btNovo, restricoes);
-		
-		restricoes.gridx = 3; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		
-		pnBot.add(btAlt, restricoes);
-		
-		restricoes.gridx = 4; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		
-		pnBot.add(btRemove, restricoes);
-		
+		btNovo.addActionListener(lstAutenticacao);
 	}
 
-*/
-
-	/*public void configurePnTable(){
-		
-		
-		
-		newList.add(new Cliente(1, "teste", "123.321.456.01", "teste@gmail.com"));
-		
-		
-		JTable table = new JTable(model);
-		
-		JScrollPane scroll = new JScrollPane(table);
-		pnBase.add(scroll);
-		
-		super.setContentPane(pnTab);
-		super.pack();
-		super.setTitle("Tela Cliente");
-		super.setSize(new Dimension(400, 200));
-		super.setVisible(true);
-		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	}*/
 	
-}
+	
+	private void JButtomNovoClienteActionPerfomed(java.awt.event.ActionEvent evt){
+		telaCadastroCliente cadClinte = new telaCadastroCliente();
+		
+		
+		cadClinte.init();
+	}
+	
+	//cahamar tela AlterarCliente
+		private void configureBtAlterar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtomAlterarClienteActionPerfomed(e);
+				}
+			};
+			
+			btAlt.addActionListener(lstAutenticacao);
+		}
+
+		
+		
+		private void JButtomAlterarClienteActionPerfomed(java.awt.event.ActionEvent evt){
+			telaAlterarCliente cadClinte = new telaAlterarCliente();
+			
+			
+			cadClinte.init();
+		}
+		
+		//botao remover cliente
+		private void configureBtRemover(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtomRemoverClienteActionPerfomed(e);
+				}
+			};
+			
+			btRemove.addActionListener(lstAutenticacao);
+		}
+
+		
+		
+		private void JButtomRemoverClienteActionPerfomed(java.awt.event.ActionEvent evt){
+			
+			
+			try{
+				//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+			controller.remover(this.newList.get(table.getSelectedRow()));
+			}catch(Exception ex){
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		}
+		
+		
+		//botao listar todos
+		private void configureBtListar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						JButtomListarClienteActionPerfomed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			};
+			
+			btList.addActionListener(lstAutenticacao);
+		}
+
+		
+		
+		private void JButtomListarClienteActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+			//dar uma olhada nesse for 
+			model.setColumnIdentifiers(new String[]{"Cod","Nome","Email","CPF"});
+			this.newList = controller.listarTodos();
+			for(int i = 0; i< newList.size(); i++){
+				model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getEmail(), this.newList.get(i).getCpf()});
+			}
+			
+		}
+		
+		//botao Inserir
+		private void configureBtInserir(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						JButtomInserirClienteActionPerfomed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			};
+			
+			btNovo.addActionListener(lstAutenticacao);
+		}
+
+		
+		
+		private void JButtomInserirClienteActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+			telaCadastroCliente cadCad = new telaCadastroCliente();
+			
+			cadCad.init();
+		}
+			
+	}
+		
+

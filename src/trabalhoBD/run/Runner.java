@@ -25,7 +25,7 @@ public class Runner {
 		
 		//==============
 		telaCadastroCliente cli = new telaCadastroCliente();
-		telaAlterarCliente cli2 = new telaAlterarCliente();
+		//telaAlterarCliente cli2 = new telaAlterarCliente();
 		telaCadastroProduto prod = new telaCadastroProduto();
 		telaAlterarProduto prod2 = new telaAlterarProduto();
 		

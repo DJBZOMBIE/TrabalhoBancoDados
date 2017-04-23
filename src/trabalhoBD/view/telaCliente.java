@@ -40,6 +40,7 @@ public class telaCliente extends JFrame{
 	
 	private ClienteTableModel model = new ClienteTableModel(newList);
 	private telaPrincipal tela = new telaPrincipal();
+	
 	private JTable table = new JTable(model);
 	//private JLabel lbCod = new JLabel("Pesquisar (por Nome)");
 	private JTextField txCod = new JTextField(20);
@@ -52,11 +53,11 @@ public class telaCliente extends JFrame{
 	private JButton btAlt = new JButton("Alterar");
 	private JButton btRemove = new JButton("Remover");
 	//===================
+	
 
 	
-	
 	public telaCliente(){
-	
+		
 	}
 	
 	public void init(){
@@ -176,10 +177,10 @@ public class telaCliente extends JFrame{
 		
 		
 		private void JButtomAlterarClienteActionPerfomed(java.awt.event.ActionEvent evt){
-			telaAlterarCliente cadClinte = new telaAlterarCliente();
+			telaAlterarCliente cliente = new telaAlterarCliente();
 			
 			
-			cadClinte.init();
+			cliente.init();
 		}
 		
 		//botao remover cliente
@@ -200,6 +201,7 @@ public class telaCliente extends JFrame{
 			
 			
 			try{
+				
 				//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
 			controller.remover(this.newList.get(table.getSelectedRow()));
 			}catch(Exception ex){

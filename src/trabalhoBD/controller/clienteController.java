@@ -22,6 +22,7 @@ public class clienteController {
 		this.conectar = new Conexao();
 	}
 	
+	//listar clientes
 	public ArrayList <Cliente> listarTodos() throws Exception{
 		//abrindo conexao
 		Statement conex = conectar.conectar();
@@ -111,7 +112,7 @@ public class clienteController {
 		
 		
 		
-		//abrinco conexao
+		//abrindo conexao
 		Statement conex = conectar.conectar();
 		
 		//instrução sql correspondente a remoção do cliente
@@ -161,6 +162,18 @@ public class clienteController {
 			throw new Exception("Informar o email do cliente");
 		}
 		
+		Statement conex = conectar.conectar();
+		
+		String sql = "UPDATE cliente SET " + " nome = '" + cliente.getNome() + "', " + "email = '" + cliente.getEmail() + "', " + "cpf = '" + cliente.getCpf()+"'"
+				+ "WHERE cpf = '" + cliente.getCpf() + "'";
+		
+		try{
+			conex.executeUpdate(sql);
+		}catch (SQLException e){
+			throw new Exception("Erro ao executar atualização: " + e.getMessage());
+		}
+		conectar.desconectar();
+		
 		//tirar ou não do programa ?
 		if(this.verificaExistencia(cliente) == -1){
 			throw new Exception("Este cliente não esta cadastrado");
@@ -168,33 +181,6 @@ public class clienteController {
 		this.lista.set(this.verificaExistencia(cliente), cliente);
 	}
 	
-	
-	public ArrayList <Cliente> pesquisar() throws Exception{
-		//abrindo conexao
-		Statement conex = conectar.conectar();
-		ArrayList<Cliente> retorno = new ArrayList<Cliente>();
-		
-		String sql = "SELECT nome FROM cliente WHERE nome LIKE ? ";
-		try{
-			ResultSet rs = conex.executeQuery(sql);
-			while(rs.next()){
-				Cliente cliente1 = new Cliente();
-				cliente1.setCod(rs.getInt("cod"));
-				cliente1.setNnome(rs.getString("nome"));
-				cliente1.setEmail(rs.getString("email"));
-				cliente1.setCpf(rs.getString("cpf"));
-				retorno.add(cliente1);
-			}
-			
-			
-		}catch(SQLException e){
-			throw new Exception("Erro ao executar consulta: " + e.getMessage());
-		}
-		
-		conectar.desconectar();
-		return retorno;	
-	}
-
 	
 	
 	

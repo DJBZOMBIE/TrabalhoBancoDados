@@ -1,20 +1,50 @@
 package trabalhoBD.controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import trabalhoBD.dao.Conexao;
 
 import trabalhoBD.model.Produto;
 
 public class produtoController {
 	
-	private ArrayList<Produto> lista; //armazenar todos os produtos cadastrados
+
+	
+	private ArrayList<Produto> lista;
+	private Conexao conectar;
+
 	
 	public produtoController(){
 		this.lista = new ArrayList<Produto>();
+		this.conectar = new Conexao();
 	}
 	
-	public ArrayList<Produto> listarTodos(){
-		return this.lista;
+	//listar clientes
+	public ArrayList <Produto> listarTodos() throws Exception{
+		//abrindo conexao
+		Statement conex = conectar.conectar();
+		ArrayList<Produto> retorno = new ArrayList<Produto>();
 		
+		String sql = "SELECT cod, nome, saldo, cod_barras FROM Produto ORDER BY nome";
+		try{
+			ResultSet rs = conex.executeQuery(sql);
+			while(rs.next()){
+				Produto prod = new Produto();
+				prod.setCod(rs.getInt("cod"));
+				prod.setNome(rs.getString("nome"));
+				prod.setSaldo(rs.getInt("saldo"));
+				prod.setCodigoBarras(rs.getString("cod_barras"));
+				retorno.add(prod);
+			}
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar consulta: " + e.getMessage());
+		}
+		conectar.desconectar();
+		
+		return retorno;	
 	}
 	
 	public void inserir(Produto produto) throws Exception{

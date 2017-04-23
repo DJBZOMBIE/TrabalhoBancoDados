@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -39,16 +40,24 @@ public class telaAlterarCliente extends JFrame{
 	private JButton btSalvar = new JButton("Salvar");
 	private JButton btCancelar = new JButton("Cancelar");
 	
+	Cliente clienteAlterar;
+	Cliente cliente = new Cliente();
+	
+	
 	public telaAlterarCliente(){
-		this.controller = controller;
+		this.clienteAlterar = cliente;
+		
 	}
 	
 	public void init(){
+		
+	
+		
 		configurePnBase();
 		configurePnBotao();
 		
 		configureBtCancelar();
-		
+		configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -131,5 +140,33 @@ public class telaAlterarCliente extends JFrame{
 	private void JButtonCalcelarActionPerfomed(java.awt.event.ActionEvent evt){
 		this.dispose();
 	}
-
+	
+	//botao salvar
+		private void configureBtSalvar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonSalvarActionPerfomed(e);
+				}
+			};
+			
+			btSalvar.addActionListener(lstAutenticacao);
+		}
+		
+		private void JButtonSalvarActionPerfomed(java.awt.event.ActionEvent evt){
+			try{
+				
+				clienteAlterar.setNnome(txNome.getText());
+				clienteAlterar.setEmail(txEmail.getText());
+				clienteAlterar.setCpf(txCpf.getText());
+				controller.atualizar(clienteAlterar);
+				
+				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+				this.dispose();
+				
+				this.dispose();
+			}catch (Exception ex){
+				JOptionPane.showMessageDialog(null, "erro");
+			}
+		}
 }

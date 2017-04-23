@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 
 public class telaPrincipal extends JFrame {
-	
+	private telaCliente controller2;
 	
 	private JPanel pnBase = new JPanel();
 	private JPanel pnMain = new JPanel();

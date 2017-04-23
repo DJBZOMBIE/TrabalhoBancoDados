@@ -3,6 +3,8 @@ package trabalhoBD.view;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -16,13 +18,14 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import trabalhoBD.controller.clienteController;
+import trabalhoBD.controller.produtoController;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.ClienteTableModel;
 import trabalhoBD.model.Produto;
 import trabalhoBD.model.ProdutoTableModel;
 
 public class telaProduto extends JFrame {
-	private clienteController controller;
+	private produtoController controller = new produtoController();
 	private ArrayList<Produto> newList = new ArrayList<Produto>();
 	private ProdutoTableModel model = new ProdutoTableModel(newList);
 	
@@ -43,7 +46,7 @@ public class telaProduto extends JFrame {
 	
 	public void init(){
 		configurePnPro();
-		centralizeFrame(); 
+		configureBtListar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
@@ -87,7 +90,7 @@ public class telaProduto extends JFrame {
 		TitledBorder border = new TitledBorder(colorBorder, "Produtos");
 		pnProd.setBorder(border);
 		//configurePnBot();
-		centralizeFrame(); 
+	
 		
 		super.setSize(200, 300);
 		super.setContentPane(pnProd);
@@ -98,13 +101,33 @@ public class telaProduto extends JFrame {
 	}
 	
 	
-	public void centralizeFrame(){
-		int x, y;
+	//botao listar todos
+	private void configureBtListar(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			
+			public void actionPerformed(ActionEvent e) {
+				try {
+					JButtomListarProdutoActionPerfomed(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
 		
-		Rectangle scr = this.getGraphicsConfiguration().getBounds();
-		Rectangle form = this.getBounds();
-		x = (int) (scr.getWidth() - form.getWidth()) / 2;
-		y = (int) (scr.getHeight() - form.getHeight())/2;
-		this.setLocation(x,y);
+		btList.addActionListener(lstAutenticacao);
 	}
+
+			
+			private void JButtomListarProdutoActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+				//dar uma olhada nesse for 
+				model.setColumnIdentifiers(new String[]{"cod","nome","saldo","cod_barras"});
+				this.newList = controller.listarTodos();
+				for(int i = 0; i< newList.size(); i++){
+					model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getSaldo(), this.newList.get(i).getCodigoBarras()});
+				}
+				
+			}
+			
 }

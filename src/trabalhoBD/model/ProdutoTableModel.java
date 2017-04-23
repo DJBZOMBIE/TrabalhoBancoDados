@@ -35,18 +35,7 @@ public class ProdutoTableModel extends DefaultTableModel {
 		return header[column];
 	}
 	
-	public Object getValueAt(int row, int column){
-		Produto prod = internalList.get(row);
-		if(column == 0){
-			return prod.getCod();
-		}else if(column == 1){
-			return prod.getNome();
-		}else if(column == 2){
-			return prod.getSaldo();
-		}else{
-			return prod.getCodigoBarras();
-		}
-	}
+	
 	
 	@Override
 	public boolean isCellEditable(int arg0, int arg1) {

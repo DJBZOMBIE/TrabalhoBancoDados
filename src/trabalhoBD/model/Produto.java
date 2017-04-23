@@ -5,12 +5,13 @@ public class Produto {
 	private int cod;
 	private String nome;
 	private int saldo;
-	private String codigoBarras;
+	private String cod_Barras;
+	
 	public String getCodigoBarras() {
-		return codigoBarras;
+		return cod_Barras;
 	}
 	public void setCodigoBarras(String codigoBarras) {
-		this.codigoBarras = codigoBarras;
+		this.cod_Barras = codigoBarras;
 	}
 	public int getCod() {
 		return cod;

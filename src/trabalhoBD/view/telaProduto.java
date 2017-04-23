@@ -27,11 +27,11 @@ public class telaProduto extends JFrame {
 	private ProdutoTableModel model = new ProdutoTableModel(newList);
 	
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por ID)");
-	private JTextField txCod = new JTextField(20);
+	//private JLabel lbCod = new JLabel("Pesquisar (por ID)");
+	//private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnProd = new JPanel();
-	private JButton btbuscar = new JButton("Buscar");
+	//private JButton btbuscar = new JButton("Buscar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
 	private JButton btAlt = new JButton("Alterar");
@@ -74,14 +74,14 @@ public class telaProduto extends JFrame {
 		GBC gbc5 = new GBC(3,8).setSpan(1, 1);
 		GBC gbc6 = new GBC(4,8).setSpan(1, 1);//fim botoes
 		GBC gbc7 = new GBC(1,3).setSpan(6, 3);
-		pnProd.add(lbCod, gbc1);
-		pnProd.add(txCod, gbc2);
+		//pnProd.add(lbCod, gbc1);
+		//pnProd.add(txCod, gbc2);
 		pnProd.add(btList, gbc3);
 		pnProd.add(btNovo, gbc4);
 		pnProd.add(btAlt, gbc5);
 		pnProd.add(btRemove, gbc6);
 		pnProd.add(scroll, gbc7);
-		pnProd.add(btbuscar,gbc8);
+		//pnProd.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Produtos");
@@ -96,11 +96,7 @@ public class telaProduto extends JFrame {
 		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
-	public void showProduto(Produto prod) {
-		//converte de int para String
-		txCod.setText(Integer.toString(prod.getCod())); 
-		txCod.setText(Integer.toString(prod.getSaldo()));
-    }
+	
 	
 	public void centralizeFrame(){
 		int x, y;

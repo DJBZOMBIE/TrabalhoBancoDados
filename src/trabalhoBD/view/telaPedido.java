@@ -37,8 +37,8 @@ public class telaPedido extends JFrame{
 	
 	private JTable table = new JTable(model);
 	private JTable table2 = new JTable(model2);
-	private JLabel lbCod = new JLabel("Pesquisar (por ID)");
-	private JTextField txCod = new JTextField(20);
+	//private JLabel lbCod = new JLabel("Pesquisar (por ID)");
+	//private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
 	private JPanel pnTab2 = new JPanel();
@@ -88,13 +88,13 @@ public class telaPedido extends JFrame{
 		//GBC gbc10 = new GBC(2,7);
 		
 		//pnTab2.add(pnTab,gbc10);
-		pnTab2.add(lbCod, gbc1);
-		pnTab2.add(txCod, gbc2);
+		//pnTab2.add(lbCod, gbc1);
+		//pnTab2.add(txCod, gbc2);
 		pnTab2.add(btList, gbc3);
 		pnTab2.add(btNovo, gbc4);
 		pnTab2.add(btRemove, gbc6);
 		pnTab2.add(scroll, gbc7);
-		pnTab2.add(btbuscar,gbc8);
+		//pnTab2.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Pedidos");

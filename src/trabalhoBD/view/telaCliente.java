@@ -8,6 +8,10 @@ import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,7 +30,7 @@ import javax.swing.table.TableModel;
 
 
 import trabalhoBD.controller.clienteController;
-
+import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.ClienteTableModel;
 
@@ -37,22 +41,22 @@ public class telaCliente extends JFrame{
 	private ClienteTableModel model = new ClienteTableModel(newList);
 	private telaPrincipal tela = new telaPrincipal();
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por CPF)");
+	//private JLabel lbCod = new JLabel("Pesquisar (por Nome)");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
 	
-	private JButton btbuscar = new JButton("Buscar");
+	//private JButton btbuscar = new JButton("Buscar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
 	private JButton btAlt = new JButton("Alterar");
 	private JButton btRemove = new JButton("Remover");
 	//===================
 
-
+	
 	
 	public telaCliente(){
-		
+	
 	}
 	
 	public void init(){
@@ -64,6 +68,8 @@ public class telaCliente extends JFrame{
 		configureBtRemover();
 		configureBtListar();
 		configureBtInserir();
+		
+		
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
@@ -96,14 +102,14 @@ public class telaCliente extends JFrame{
 		GBC gbc5 = new GBC(3,8).setSpan(1, 1);
 		GBC gbc6 = new GBC(4,8).setSpan(1, 1);//fim botoes
 		GBC gbc7 = new GBC(1,3).setSpan(6, 3);
-		pnTab.add(lbCod, gbc1);
-		pnTab.add(txCod, gbc2);
+		//pnTab.add(lbCod, gbc1);
+		//pnTab.add(txCod, gbc2);
 		pnTab.add(btList, gbc3);
 		pnTab.add(btNovo, gbc4);
 		pnTab.add(btAlt, gbc5);
 		pnTab.add(btRemove, gbc6);
 		pnTab.add(scroll, gbc7);
-		pnTab.add(btbuscar,gbc8);
+		//pnTab.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Cliente");
@@ -206,6 +212,7 @@ public class telaCliente extends JFrame{
 		private void configureBtListar(){
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
+				
 				public void actionPerformed(ActionEvent e) {
 					try {
 						JButtomListarClienteActionPerfomed(e);

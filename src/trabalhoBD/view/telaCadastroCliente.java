@@ -152,6 +152,7 @@ public class telaCadastroCliente extends JFrame{
 							controller.inserir(cliente);
 							
 							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+							this.dispose();
 							
 						}catch(Exception ex){
 							
@@ -159,5 +160,7 @@ public class telaCadastroCliente extends JFrame{
 						}
 						
 					}
+					
+					
 
 }

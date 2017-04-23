@@ -5,12 +5,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
 import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
+import trabalhoBD.model.ClienteTableModel;
 
 public class clienteController {
 	private ArrayList<Cliente> lista;
 	private Conexao conectar;
+
 	
 	public clienteController(){
 		this.lista = new ArrayList<Cliente>();
@@ -163,6 +168,33 @@ public class clienteController {
 		this.lista.set(this.verificaExistencia(cliente), cliente);
 	}
 	
+	
+	public ArrayList <Cliente> pesquisar() throws Exception{
+		//abrindo conexao
+		Statement conex = conectar.conectar();
+		ArrayList<Cliente> retorno = new ArrayList<Cliente>();
+		
+		String sql = "SELECT nome FROM cliente WHERE nome LIKE ? ";
+		try{
+			ResultSet rs = conex.executeQuery(sql);
+			while(rs.next()){
+				Cliente cliente1 = new Cliente();
+				cliente1.setCod(rs.getInt("cod"));
+				cliente1.setNnome(rs.getString("nome"));
+				cliente1.setEmail(rs.getString("email"));
+				cliente1.setCpf(rs.getString("cpf"));
+				retorno.add(cliente1);
+			}
+			
+			
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar consulta: " + e.getMessage());
+		}
+		
+		conectar.desconectar();
+		return retorno;	
+	}
+
 	
 	
 	

@@ -128,7 +128,7 @@ public class clienteController {
 		
 		//error
 		if(this.verificaExistencia(cliente)== -1){
-			throw new Exception("Este cliente não esta cadastrado");
+			throw new Exception("Este cliente não esta mais cadastrado");
 		}
 		conectar.desconectar();
 		
@@ -136,7 +136,7 @@ public class clienteController {
 	}
 	
 	
-	//atualizar cliente
+/*	//atualizar cliente
 	public void atualizar(Cliente cliente) throws Exception{
 		if (cliente == null){
 			throw new Exception("O cliente não foi instanciado");
@@ -182,7 +182,7 @@ public class clienteController {
 		this.lista.set(this.verificaExistencia(cliente), cliente);
 	}
 	
-	
+	*/
 	
 	
 	//voltar nesse metodo depois
@@ -192,6 +192,7 @@ public class clienteController {
 		for(Cliente cli: lista){
 			if(cliente.getCod() == cli.getCod()){
 				retorno = cli.getCod();
+		
 				break;
 			}
 		}

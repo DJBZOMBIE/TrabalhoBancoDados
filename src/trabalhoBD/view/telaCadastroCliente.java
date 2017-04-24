@@ -152,6 +152,7 @@ public class telaCadastroCliente extends JFrame{
 							controller.inserir(cliente);
 							
 							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+							//clearFields();
 							this.dispose();
 							
 						}catch(Exception ex){
@@ -161,6 +162,11 @@ public class telaCadastroCliente extends JFrame{
 						
 					}
 					
-					
+					 public void clearFields() {
+							txNome.setText("");
+							txEmail.setText("");
+							txCpf.setText("");
+
+						}
 
 }

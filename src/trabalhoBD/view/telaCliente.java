@@ -51,7 +51,7 @@ public class telaCliente extends JFrame{
 	private JButton btbuscar = new JButton("Buscar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
-	private JButton btAlt = new JButton("Alterar");
+	//private JButton btAlt = new JButton("Alterar");
 	private JButton btRemove = new JButton("Remover");
 	//===================
 	
@@ -66,7 +66,7 @@ public class telaCliente extends JFrame{
 		centralizeFrame(); 
 		
 	
-		configureBtAlterar();
+		//configureBtAlterar();
 		configureBtRemover();
 		configureBtListar();
 		configureBtInserir();
@@ -108,8 +108,8 @@ public class telaCliente extends JFrame{
 		pnTab.add(txCod, gbc2);
 		pnTab.add(btList, gbc3);
 		pnTab.add(btNovo, gbc4);
-		pnTab.add(btAlt, gbc5);
-		pnTab.add(btRemove, gbc6);
+		//pnTab.add(btAlt, gbc5);
+		pnTab.add(btRemove, gbc5);
 		pnTab.add(scroll, gbc7);
 		pnTab.add(btbuscar,gbc8);
 		
@@ -142,7 +142,7 @@ public class telaCliente extends JFrame{
 	}
 	
 	
-	//cahamar tela AlterarCliente
+	/*//cahamar tela AlterarCliente
 		private void configureBtAlterar(){
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
@@ -161,7 +161,7 @@ public class telaCliente extends JFrame{
 			
 			
 			cliente.init();
-		}
+		}*/
 		
 		//botao remover cliente
 		private void configureBtRemover(){
@@ -284,7 +284,7 @@ public class telaCliente extends JFrame{
 			}
 		
 		
-			//botao listar todos
+			//botao buscar 
 			private void configureBtBuscar(){
 				ActionListener lstAutenticacao = new ActionListener() {
 					@Override

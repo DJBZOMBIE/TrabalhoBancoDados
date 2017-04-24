@@ -7,11 +7,13 @@ public class Produto {
 	private int saldo;
 	private String cod_Barras;
 	
-	public String getCodigoBarras() {
+	
+
+	public String getCod_Barras() {
 		return cod_Barras;
 	}
-	public void setCodigoBarras(String codigoBarras) {
-		this.cod_Barras = codigoBarras;
+	public void setCod_Barras(String cod_Barras) {
+		this.cod_Barras = cod_Barras;
 	}
 	public int getCod() {
 		return cod;

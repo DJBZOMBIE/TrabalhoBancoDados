@@ -57,7 +57,7 @@ public class telaAlterarCliente extends JFrame{
 		configurePnBotao();
 		
 		configureBtCancelar();
-		configureBtSalvar();
+		//configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -141,7 +141,7 @@ public class telaAlterarCliente extends JFrame{
 		this.dispose();
 	}
 	
-	//botao salvar
+	/*//botao salvar
 		private void configureBtSalvar(){
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
@@ -168,5 +168,5 @@ public class telaAlterarCliente extends JFrame{
 			}catch (Exception ex){
 				JOptionPane.showMessageDialog(null, "erro");
 			}
-		}
+		}*/
 }

@@ -36,7 +36,7 @@ public class produtoController {
 				prod.setCod(rs.getInt("cod"));
 				prod.setNome(rs.getString("nome"));
 				prod.setSaldo(rs.getInt("saldo"));
-				prod.setCodigoBarras(rs.getString("cod_barras"));
+				prod.setCod_Barras(rs.getString("cod_barras"));
 				retorno.add(prod);
 			}
 		}catch(SQLException e){
@@ -47,6 +47,7 @@ public class produtoController {
 		return retorno;	
 	}
 	
+	//pq não deu certo ?
 	public void inserir(Produto produto) throws Exception{
 		if (produto == null){
 			throw new Exception("O produto não foi instanciado");
@@ -54,10 +55,10 @@ public class produtoController {
 		if(produto.getCod()<0){
 			throw new Exception("O id não pode ser negativo");
 		}
-		if(produto.getCodigoBarras()==null){
+		if(produto.getCod_Barras()== null){
 			throw new Exception("Informar o código de barras do produto");
 		}
-		if(produto.getCodigoBarras().trim().equals("")){
+		if(produto.getCod_Barras().trim().equals("")){
 			throw new Exception("Informar o código de barras do produto");
 		}
 		if(produto.getNome()==null){
@@ -70,6 +71,17 @@ public class produtoController {
 			throw new Exception("O saldo do produto deverá ser superior a zero");
 		}
 		
+		Statement conex = conectar.conectar();
+		
+		String sql = "INSERT INTO produto (nome, saldo, cod_barras)";sql += "VALUES('"+produto.getNome() + "', '" + produto.getSaldo()+"', '" + produto.getCod_Barras()+ "')";
+		
+		try{
+			conex.execute(sql);
+		}catch(SQLException e){
+			throw new Exception("Erro ao inserir: " + e.getMessage());
+		}
+		conectar.desconectar();
+		
 		if(this.verificaExistencia(produto)>=0){
 			throw new Exception("O produto já esta cadastrado");
 		}
@@ -80,20 +92,32 @@ public class produtoController {
 		if (produto == null){
 			throw new Exception("O produto não foi instanciado");
 		}
-		if(produto.getCodigoBarras() == null){
+		if(produto.getCod_Barras() == null){
 			throw new Exception("Informar o código de barras do produto");
 		}
-		if(produto.getCodigoBarras().trim().equals("")){
+		if(produto.getCod_Barras().trim().equals("")){
 			throw new Exception("Informar o código de barras do produto");
 		}
 		
+		
+		Statement conex = conectar.conectar();
+		
+		String sql = "DELETE FROM produto Where cod = '" + produto.getCod() + "'";
+		
+		try{
+			conex.execute(sql);
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar remoção: " + e.getMessage());
+		}
+		
+		conectar.desconectar();
 		if(this.verificaExistencia(produto)==-1){
-			throw new Exception("O produto não esta cadastrado");
+			throw new Exception("O produto não esta mais cadastrado");
 		}
 		this.lista.remove(this.verificaExistencia(produto));
 	}
 	
-	public void atualizar(Produto produto) throws Exception{
+	/*public void atualizar(Produto produto) throws Exception{
 		if (produto == null){
 			throw new Exception("O produto não foi instanciado");
 		}
@@ -117,7 +141,7 @@ public class produtoController {
 			throw new Exception("O produto não esta cadastrado");
 		}
 		this.lista.set(this.verificaExistencia(produto), produto);
-	}
+	}*/
 	
 	//verificar existencia do produto pelo codigo(id)
 	public int verificaExistencia(Produto produto){

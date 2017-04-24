@@ -4,23 +4,36 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.print.attribute.IntegerSyntax;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+
 import trabalhoBD.controller.produtoController;
+import trabalhoBD.dao.Conexao;
+import trabalhoBD.model.Cliente;
 import trabalhoBD.model.Produto;
 
 public class telaCadastroProduto extends JFrame{
 	private produtoController controller;
 	private ArrayList<Produto> newList = new ArrayList<Produto>();
+	private Conexao conectar;
 	
+	private Statement connection;
 	private JLabel lbCod = new JLabel("Código:");
 	private JLabel lbNome = new JLabel("Nome:");
 	private JLabel lbSaldo = new JLabel("Saldo:");
@@ -37,15 +50,19 @@ public class telaCadastroProduto extends JFrame{
 	private JButton btSalvar = new JButton("Salvar");
 	private JButton btCancelar = new JButton("Cancelar");
 	
+	
+
 	public telaCadastroProduto(){
 		this.controller = controller;
+		this.conectar = new Conexao();
+		this.connection = connection;
 	}
 	
 	public void init(){
 		configurePnBase();
 		configurePnBotao();
-		
-		
+		configureBtCancelar();
+		configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -111,5 +128,126 @@ public class telaCadastroProduto extends JFrame{
 		super.pack();
 	}
 	
+	
+
+	
+	
+	
+	
+	
+	//botao cancelar
+		private void configureBtCancelar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonCancelarActionPerformed(e);
+					}
+				};
+					btCancelar.addActionListener(lstAutenticacao);
+				}
+				
+				public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt){	
+					this.dispose();
+					
+				}
+				
+				//==============================================================================
+			/*	//botao salvar/ PERGUNTAR PQ NÃO DEU CERTO ??????
+
+				private void configureBtSalvar(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							JButtonSalvarActionPerformed(e);
+							}
+						};
+							btSalvar.addActionListener(lstAutenticacao);
+						}
+						
+						public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){	
+							try{
+							
+								Produto produto = new Produto();
+								produto.setNome(txNome.getText());
+								
+								
+								produto.setSaldo(Integer.parseInt(txSaldo.getText()));
+								produto.setCod_Barras(txCodBar.getText());
+								controller.inserir(produto);
+								
+								JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso");
+								this.dispose();
+								
+							}catch(Exception ex){
+								
+								JOptionPane.showMessageDialog(null, "ERRO");
+							}
+							
+						}*/
+				
+				
+				//conexao
+				public void gambiarra() throws Exception{
+					//Produto produto = new Produto();
+					
+					if (txNome.getText().trim().equals("")){
+						JOptionPane.showMessageDialog(null, "Campo nome vazio!");
+						throw new Exception("Campos vazios");
+					}
+					
+					if (txSaldo.getText().trim().equals("")){
+						JOptionPane.showMessageDialog(null, "Campo saldo vazio!");
+						throw new Exception("Campos vazios");
+					}
+					if (txCodBar.getText().trim().equals("")){
+						JOptionPane.showMessageDialog(null, "Campo código de barras vazio!");
+						throw new Exception("Campos vazios");
+					}
+					
+					
+						Statement conex = conectar.conectar();
+					
+						String sql = "INSERT INTO produto (nome, saldo, cod_barras)";sql += "VALUES('"+ txNome.getText() + "', '" + txSaldo.getText()+ "', '" + txCodBar.getText()+ "')";
+						
+						
+						try{
+						conex.executeUpdate(sql);
+						JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso! " );
+						}catch(SQLException e){
+						throw new Exception("Erro: " + e.getMessage());
+					}
+				}
+				
+				
+				//botao salvar
+				private void configureBtSalvar(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							try {
+								JButtonSalvarActionPerformed(e);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							}
+						};
+							btSalvar.addActionListener(lstAutenticacao);
+						}
+				
+				
+				
+				public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) throws Exception{	
+					gambiarra();
+					clearFields();
+				}
+				
+				
+				 public void clearFields() {
+						txNome.setText("");
+						txSaldo.setText("");
+						txCodBar.setText("");
+
+					}
 
 }

@@ -22,6 +22,7 @@ public class clienteController {
 		this.conectar = new Conexao();
 	}
 	
+	
 	//listar clientes
 	public ArrayList <Cliente> listarTodos() throws Exception{
 		//abrindo conexao

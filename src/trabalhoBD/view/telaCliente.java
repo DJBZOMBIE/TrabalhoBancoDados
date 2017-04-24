@@ -37,17 +37,18 @@ import trabalhoBD.model.ClienteTableModel;
 public class telaCliente extends JFrame{
 	private clienteController controller = new clienteController();
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
+	private Conexao conectar;
 	
 	private ClienteTableModel model = new ClienteTableModel(newList);
 	private telaPrincipal tela = new telaPrincipal();
 	
 	private JTable table = new JTable(model);
-	//private JLabel lbCod = new JLabel("Pesquisar (por Nome)");
+	private JLabel lbCod = new JLabel("Pesquisar (por Nome)");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
 	
-	//private JButton btbuscar = new JButton("Buscar");
+	private JButton btbuscar = new JButton("Buscar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
 	private JButton btAlt = new JButton("Alterar");
@@ -57,19 +58,19 @@ public class telaCliente extends JFrame{
 
 	
 	public telaCliente(){
-		
+		this.conectar = new Conexao();
 	}
 	
 	public void init(){
 		configurePnTab();
 		centralizeFrame(); 
 		
-		configureBtEntrada();
+	
 		configureBtAlterar();
 		configureBtRemover();
 		configureBtListar();
 		configureBtInserir();
-		
+		configureBtBuscar();
 		
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
@@ -103,14 +104,14 @@ public class telaCliente extends JFrame{
 		GBC gbc5 = new GBC(3,8).setSpan(1, 1);
 		GBC gbc6 = new GBC(4,8).setSpan(1, 1);//fim botoes
 		GBC gbc7 = new GBC(1,3).setSpan(6, 3);
-		//pnTab.add(lbCod, gbc1);
-		//pnTab.add(txCod, gbc2);
+		pnTab.add(lbCod, gbc1);
+		pnTab.add(txCod, gbc2);
 		pnTab.add(btList, gbc3);
 		pnTab.add(btNovo, gbc4);
 		pnTab.add(btAlt, gbc5);
 		pnTab.add(btRemove, gbc6);
 		pnTab.add(scroll, gbc7);
-		//pnTab.add(btbuscar,gbc8);
+		pnTab.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Cliente");
@@ -140,27 +141,6 @@ public class telaCliente extends JFrame{
 		this.setLocation(x,y);
 	}
 	
-	
-	//cahamar tela cadastroCliente
-	private void configureBtEntrada(){
-		ActionListener lstAutenticacao = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JButtomNovoClienteActionPerfomed(e);
-			}
-		};
-		
-		btNovo.addActionListener(lstAutenticacao);
-	}
-
-	
-	
-	private void JButtomNovoClienteActionPerfomed(java.awt.event.ActionEvent evt){
-		telaCadastroCliente cadClinte = new telaCadastroCliente();
-		
-		
-		cadClinte.init();
-	}
 	
 	//cahamar tela AlterarCliente
 		private void configureBtAlterar(){
@@ -264,7 +244,76 @@ public class telaCliente extends JFrame{
 			
 			cadCad.init();
 		}
+	
+		
+		
+		//testando busca
+		//listar clientes
+			public ArrayList <Cliente> busca() throws Exception{
+				
+
+				if (txCod.getText().trim().equals("")){
+					JOptionPane.showMessageDialog(null, "campos vazios!");
+					throw new Exception("Campos vazios");
+				}
+				
+				//abrindo conexao
+				Statement conex = conectar.conectar();
+				ArrayList<Cliente> retorno = new ArrayList<Cliente>();
+				
+				String sql = "SELECT cod, nome, email, cpf FROM cliente WHERE nome = '" + txCod.getText() + "'";
+				try{
+					ResultSet rs = conex.executeQuery(sql);
+					while(rs.next()){
+					
+						Cliente cliente = new Cliente();
+						cliente.setCod(rs.getInt("cod"));
+						cliente.setNnome(rs.getString("nome"));
+						cliente.setEmail(rs.getString("email"));
+						cliente.setCpf(rs.getString("cpf"));
+						retorno.add(cliente);
+					}
+				}catch(SQLException e){
+					throw new Exception("Erro ao executar consulta: " + e.getMessage());
+				}
+				
+
+				conectar.desconectar();
+				
+				return retorno;	
+			}
+		
+		
+			//botao listar todos
+			private void configureBtBuscar(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					
+					public void actionPerformed(ActionEvent e) {
+						try {
+							JButtomListarBuscarActionPerfomed(e);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				};
+				
+				btbuscar.addActionListener(lstAutenticacao);
+			}
+
 			
-	}
+			
+			private void JButtomListarBuscarActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+				//dar uma olhada nesse for 
+				model.setColumnIdentifiers(new String[]{"Cod","Nome","Email","CPF"});
+				this.newList = busca();
+				for(int i = 0; i< newList.size(); i++){
+					model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getEmail(), this.newList.get(i).getCpf()});
+				}
+				
+			}
+		
+}
 		
 

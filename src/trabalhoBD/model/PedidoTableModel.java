@@ -45,7 +45,7 @@ public class PedidoTableModel extends DefaultTableModel {
 		}else if(column == 2){
 			return ped.getCod_cliente();
 		}else{
-			return ped.getCod_Item();
+			return ped.getCod_item();
 		}
 	}
 	

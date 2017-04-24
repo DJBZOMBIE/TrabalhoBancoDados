@@ -37,12 +37,12 @@ public class telaCadastroPedido extends JFrame{
 	private JLabel lbCod = new JLabel("Número:");
 	private JLabel lbNome = new JLabel("Data:");
 	private JLabel CodCLI = new JLabel("Código do Cliente:");
-	private JLabel lbCodItem = new JLabel("Código do Item:");
+	
 	
 	private JTextField txCod = new JTextField(10);
 	private JTextField txNome = new JTextField(20);
 	private JTextField txCodCLI = new JTextField(10);
-	private JTextField txCodItem = new JTextField(20);
+
 	
 	private JLabel lbPreco = new JLabel("Preço:");
 	private JLabel lbQuantidade = new JLabel("Quantidade:");
@@ -119,8 +119,8 @@ public class telaCadastroPedido extends JFrame{
 		pnBase.add(txNome,gbc4);
 		pnBase.add(CodCLI,gbc5);
 		pnBase.add(txCodCLI,gbc6);
-		pnBase.add(lbCodProd,gbc7);
-		pnBase.add(txCodItem,gbc8);
+		//pnBase.add(lbCodProd,gbc7);
+		//pnBase.add(txCodItem,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Cadastro de Pedidos");
@@ -153,11 +153,11 @@ public class telaCadastroPedido extends JFrame{
 		pnItem.add(txQuantidade,gbc4);
 		pnItem.add(CodCodPedido,gbc5);
 		pnItem.add(txCodPedido,gbc6);
-		pnItem.add(lbCodItem,gbc7);
+		pnItem.add(lbCodProd,gbc7);
 		pnItem.add(txCodProd,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
-		TitledBorder border = new TitledBorder(colorBorder, "Itens do Produto");
+		TitledBorder border = new TitledBorder(colorBorder, "Itens do Pedido");
 		pnItem.setBorder(border);
 		
 		super.setSize(400, 300);

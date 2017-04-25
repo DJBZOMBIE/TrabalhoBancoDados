@@ -2,13 +2,13 @@ package trabalhoBD.model;
 
 public class Item {
 	private int cod;
-	private Produto cod_produto;
+	private int cod_produto;
 	private int quantidade;
 	private int cod_pedido;
 	private float preco;
 	
 	public Item (){
-		this.cod_produto = new Produto();
+		
 	}
 	
 	public float getPreco() {
@@ -27,11 +27,11 @@ public class Item {
 		this.cod = cod;
 	}
 
-	public Produto getCod_produto() {
+	public int getCod_produto() {
 		return cod_produto;
 	}
 
-	public void setCod_produto(Produto cod_produto) {
+	public void setCod_produto(int cod_produto) {
 		this.cod_produto = cod_produto;
 	}
 

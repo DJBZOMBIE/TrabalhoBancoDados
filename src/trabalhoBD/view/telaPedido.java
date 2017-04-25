@@ -3,19 +3,31 @@ package trabalhoBD.view;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import trabalhoBD.controller.clienteController;
+import trabalhoBD.controller.pedidoController;
+import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.Item;
 import trabalhoBD.model.Pedido;
@@ -26,11 +38,11 @@ import trabalhoBD.model.itemTableModel;
 
 public class telaPedido extends JFrame{
 	
-	private clienteController controller;
+	private pedidoController controller = new pedidoController();
 	private ArrayList<Pedido> newList = new ArrayList<Pedido>();
 	private ArrayList<Item> newList2 = new ArrayList<Item>();
 	private ArrayList<Cliente> newListCli = new ArrayList<Cliente>();
-	
+	private Conexao conectar;
 	private PedidoTableModel model = new PedidoTableModel(newList);
 	
 	private itemTableModel model2 = new itemTableModel(newList2);
@@ -49,13 +61,17 @@ public class telaPedido extends JFrame{
 	
 	public telaPedido(){
 		this.controller = controller;
+		this.conectar = new Conexao();
 	}
 	
 	public void init(){
 		
 		congifurepnTab();
 		congifurepnTab2();
-		centralizeFrame(); 
+		configureBtListar();
+		configureBtInserir();
+		configureBtRemover();
+		mouseEventTable();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
@@ -74,6 +90,7 @@ public class telaPedido extends JFrame{
 	}
 	
 	public void congifurepnTab2(){
+		
 		JScrollPane scroll = new JScrollPane(table);
 		GridBagLayout layoutData = new GridBagLayout();
 		pnTab2.setLayout(layoutData);
@@ -132,20 +149,161 @@ public class telaPedido extends JFrame{
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
-	/*public void showProduto(Produto prod) { //editar depois
-		//converte de int para String
-		txCod.setText(Integer.toString(prod.getCod())); 
-		txCod.setText(Integer.toString(prod.getSaldo()));
-    }*/
 	
-	public void centralizeFrame(){
-		int x, y;
-		
-		Rectangle scr = this.getGraphicsConfiguration().getBounds();
-		Rectangle form = this.getBounds();
-		x = (int) (scr.getWidth() - form.getWidth()) / 2;
-		y = (int) (scr.getHeight() - form.getHeight())/2;
-		this.setLocation(x,y);
-	}
-		
+	//botao listar pedido
+			private void configureBtListar(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					
+					public void actionPerformed(ActionEvent e) {
+						try {
+							
+							JButtomListarPedidoActionPerfomed(e);
+							
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				};
+				
+				btList.addActionListener(lstAutenticacao);
+			}
+
+			
+			
+			private void JButtomListarPedidoActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+				//dar uma olhada nesse for 
+				model.setColumnIdentifiers(new String[]{"Cod","Data","Código do Cliente"});
+				this.newList = controller.listarTodos();
+				for(int i = 0; i< newList.size(); i++){
+					model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getData(),this.newList.get(i).getCod_cliente()});
+				}
+				
+			}
+	
+			//listar itens do pedido ================================ ERRRRROOOORRRRR ========================
+			
+			public void mouseEventTable(){
+				 MouseListener listener = new MouseAdapter(){
+					 
+					 public void mouseClicked(MouseEvent e){
+						 if(e.getClickCount() == 1){
+							 
+							 try {
+								 cliqueTabela();
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						 }
+					 }
+					 
+				 };
+				 table.addMouseListener(listener);
+			}
+			
+			
+			public ArrayList<Item> itemList() throws Exception{
+				/*DefaultTableModel modelo = new DefaultTableModel();
+				model.setColumnIdentifiers(new String[]{"Produto", "Preço", "Quantidade"});
+				Pedido pedido = this.newList.get(table.getSelectedRow());
+				for(int i = 0; i< pedido.getCod_item().size(); i++){
+					model2.addRow(new Object[]{pedido.getCod_item().get(i).getCod_produto(), pedido.getCod_item().get(i).getQuantidade(),pedido.getCod_item().get(i).getPreco()});
+					
+				}
+				table2.setModel(modelo);*/
+				
+				Statement conex = conectar.conectar();
+				ArrayList<Item> retorno = new ArrayList<Item>();
+				Pedido pedido = new Pedido();
+				
+				String sql = "SELECT i.cod_pedido, i.cod_produto, i.quantidade, i.cod  FROM item as i where cod = '" + table.getSelectedRow()+ "'";
+				
+				try{
+					ResultSet rs = conex.executeQuery(sql);
+					while(rs.next()){
+						
+						Item item = new Item();
+						
+						item.setCod_pedido(rs.getInt("cod_pedido"));
+						item.setCod_produto(rs.getInt("cod_produto"));
+						item.setQuantidade(rs.getInt("quantidade"));
+						item.setCod(rs.getInt("cod"));
+						retorno.add(item);
+					}
+				}catch(SQLException e){
+					throw new Exception("Erro ao executar consulta: " + e.getMessage());
+				}
+
+				conectar.desconectar();
+				
+				return retorno;	
+					
+				
+			}
+			
+			private void cliqueTabela()throws Exception{
+				model2.setColumnIdentifiers(new String[]{"cod_pedido","cod_produto","quantidade","cod"});
+				this.newList2 = itemList();
+				for(int i = 0; i< newList2.size(); i++){
+					model2.addRow(new Object[]{this.newList2.get(i).getCod_pedido(), this.newList2.get(i).getCod_produto(),this.newList2.get(i).getQuantidade(),this.newList2.get(i).getCod()});
+					
+				}
+				table2.setModel(model2);
+			}
+			
+			//======================================= END ERRRRROORRR =========================
+			
+			//botao Inserir
+			private void configureBtInserir(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							JButtomInserirPedidoActionPerfomed(e);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				};
+				
+				btNovo.addActionListener(lstAutenticacao);
+			}
+
+			
+			
+			private void JButtomInserirPedidoActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+				telaCadastroPedido cadPed = new telaCadastroPedido();
+				
+				cadPed.init();
+			}
+	
+	
+			//botao remover pedido
+			private void configureBtRemover(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtomRemoverPedidoActionPerfomed(e);
+					}
+				};
+				
+				btRemove.addActionListener(lstAutenticacao);
+			}
+
+			
+			
+			private void JButtomRemoverPedidoActionPerfomed(java.awt.event.ActionEvent evt){
+				
+				
+				try{
+					
+					//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+				controller.remover(this.newList.get(table.getSelectedRow()));
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+				}
+			}
 }

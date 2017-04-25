@@ -4,12 +4,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -17,6 +22,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import trabalhoBD.controller.clienteController;
+import trabalhoBD.controller.pedidoController;
+import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.Item;
 import trabalhoBD.model.Pedido;
@@ -24,11 +31,13 @@ import trabalhoBD.model.PedidoTableModel;
 import trabalhoBD.model.itemTableModel;
 
 public class telaCadastroPedido extends JFrame{
-	private clienteController controller;
+	private clienteController controller2 = new clienteController();
+	private pedidoController controller = new pedidoController();
 	private ArrayList<Pedido> newList = new ArrayList<Pedido>();
 	private ArrayList<Item> newList2 = new ArrayList<Item>();
 	private ArrayList<Cliente> newListCli = new ArrayList<Cliente>();
 	
+	private Conexao conectar;
 	/*private PedidoTableModel model = new PedidoTableModel(newList);
 	
 	private itemTableModel model2 = new itemTableModel(newList2);
@@ -40,7 +49,7 @@ public class telaCadastroPedido extends JFrame{
 	
 	
 	private JTextField txCod = new JTextField(10);
-	private JTextField txNome = new JTextField(20);
+	private JTextField txData = new JTextField(20);
 	private JTextField txCodCLI = new JTextField(10);
 
 	
@@ -65,7 +74,7 @@ public class telaCadastroPedido extends JFrame{
 	
 	
 	public telaCadastroPedido(){
-		
+		this.conectar = new Conexao();
 		
 		
 	}
@@ -76,7 +85,8 @@ public class telaCadastroPedido extends JFrame{
 		configurePnBase();
 		configurePnItem();
 		configurePnBotao(); 
-		
+		configureBtSalvar();
+		configureBtCancelar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -116,7 +126,7 @@ public class telaCadastroPedido extends JFrame{
 		pnBase.add(lbCod,gbc1);
 		pnBase.add(txCod,gbc2);
 		pnBase.add(lbNome,gbc3);
-		pnBase.add(txNome,gbc4);
+		pnBase.add(txData,gbc4);
 		pnBase.add(CodCLI,gbc5);
 		pnBase.add(txCodCLI,gbc6);
 		//pnBase.add(lbCodProd,gbc7);
@@ -180,5 +190,76 @@ public class telaCadastroPedido extends JFrame{
 		super.setVisible(true);
 		super.pack();
 	}
+	
+	
+	public void gambiarra() throws Exception{
+		//Produto produto = new Produto();
+		
+		
+		
+		
+			Statement conex = conectar.conectar();
+			String sql2 = "INSERT INTO pedido(cod, data, cod_cliente)";sql2 += "VALUES('" + txCod.getText() + "', '" + txData.getText() + "', '" + txCodCLI.getText()+"')";
+			String sql = "INSERT INTO item(cod_pedido, cod_produto, quantidade)";sql += "VALUES('"+ txCodPedido.getText() + "', '" + txCodProd.getText()+ "', '" + txQuantidade.getText()+ "')";
+			
+			
+			try{
+			conex.execute(sql2);
+			conex.execute(sql);
+			JOptionPane.showMessageDialog(null, "cadastrado com sucesso! " );
+			}catch(SQLException e){
+			throw new Exception("Erro: " + e.getMessage());
+		}
+	}
+	
+	
+	//botao salvar
+	private void configureBtSalvar(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					JButtonSalvarActionPerformed(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				}
+			};
+				btSalvar.addActionListener(lstAutenticacao);
+			}
+	
+	
+	
+	public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) throws Exception{	
+		gambiarra();
+		//clearFields();
+	}
+	
+	/*
+	 public void clearFields() {
+			txNome.setText("");
+			txSaldo.setText("");
+			txCodBar.setText("");
+
+		}*/
+	
+	
+	
+	//botao cancelar
+			private void configureBtCancelar(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtonCancelarActionPerformed(e);
+						}
+					};
+						btCancelar.addActionListener(lstAutenticacao);
+					}
+					
+					public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt){	
+						this.dispose();
+						
+					}
 	
 }

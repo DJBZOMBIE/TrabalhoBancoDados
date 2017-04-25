@@ -126,12 +126,12 @@ public class clienteController {
 			throw new Exception("Erro ao executar remoção: "+e.getMessage());
 		}
 		
-		//error
-		if(this.verificaExistencia(cliente)== -1){
-			throw new Exception("Este cliente não esta mais cadastrado");
-		}
-		conectar.desconectar();
 		
+		conectar.desconectar();
+		//error
+				if(this.verificaExistencia(cliente)== -1){
+					throw new Exception("Este cliente não esta mais cadastrado");
+				}
 		this.lista.remove(this.verificaExistencia(cliente));
 	}
 	

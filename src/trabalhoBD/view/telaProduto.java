@@ -35,7 +35,7 @@ public class telaProduto extends JFrame {
 	private ProdutoTableModel model = new ProdutoTableModel(newList);
 	private Conexao conectar;
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por nome):");
+	private JLabel lbCod = new JLabel("Pesquisar por (ID):");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnProd = new JPanel();
@@ -205,7 +205,7 @@ public class telaProduto extends JFrame {
 					Statement conex = conectar.conectar();
 					ArrayList<Produto> retorno = new ArrayList<Produto>();
 					
-					String sql = "SELECT cod, nome, saldo, cod_barras FROM produto WHERE nome = '" + txCod.getText() + "'";
+					String sql = "SELECT cod, nome, saldo, cod_barras FROM produto WHERE cod = '" + txCod.getText() + "'";
 					try{
 						ResultSet rs = conex.executeQuery(sql);
 						while(rs.next()){

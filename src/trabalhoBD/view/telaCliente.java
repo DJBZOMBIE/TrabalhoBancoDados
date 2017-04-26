@@ -43,7 +43,7 @@ public class telaCliente extends JFrame{
 	private telaPrincipal tela = new telaPrincipal();
 	
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por Nome):");
+	private JLabel lbCod = new JLabel("Pesquisar por (ID):");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
@@ -261,7 +261,7 @@ public class telaCliente extends JFrame{
 				Statement conex = conectar.conectar();
 				ArrayList<Cliente> retorno = new ArrayList<Cliente>();
 				
-				String sql = "SELECT cod, nome, email, cpf FROM cliente WHERE nome = '" + txCod.getText() + "'";
+				String sql = "SELECT cod, nome, email, cpf FROM cliente WHERE cod = '" + txCod.getText() + "'";
 				try{
 					ResultSet rs = conex.executeQuery(sql);
 					while(rs.next()){

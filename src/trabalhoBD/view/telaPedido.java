@@ -1,8 +1,11 @@
 package trabalhoBD.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -50,7 +53,10 @@ public class telaPedido extends JFrame{
 	private JTable table = new JTable(model);
 	private JTable table2 = new JTable(model2);
 	private JLabel lbBuscar = new JLabel("Verificar itens do Pedido (ID):");
+	private JLabel lbBuscarP = new JLabel("Buscar Pedido (ID):");
+	
 	private JTextField txPesquisa = new JTextField();
+	private JTextField txPesquisaP = new JTextField();
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
 	private JPanel pnTab2 = new JPanel();
@@ -58,7 +64,7 @@ public class telaPedido extends JFrame{
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
 	private JButton btRemove = new JButton("Remover");
-	
+	private JButton btBuscarP = new JButton("Buscar");
 	
 	public telaPedido(){
 		this.controller = controller;
@@ -73,15 +79,20 @@ public class telaPedido extends JFrame{
 		configureBtInserir();
 		configureBtRemover();
 		configureDetalhesPedido();
+		configureBtBuscar();
 		//mouseEventTable();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
 		GBC gbc10 = new GBC(1,1);
-		GBC gbc11 = new GBC(1,7);
+		GBC gbc11 = new GBC(5,1);
 		pnBase.add(pnTab,gbc11);
 		pnBase.add(pnTab2,gbc10);
 		
+		 setResizable(false);
+		    setLocationRelativeTo(null);
+		    pegarResolucao();   
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		super.setTitle("Tela Pedidos");
 		super.setContentPane(pnBase);
 		super.setVisible(true);
@@ -91,6 +102,12 @@ public class telaPedido extends JFrame{
 		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
+	private void pegarResolucao() {
+        Toolkit t = Toolkit.getDefaultToolkit();
+        Dimension dimensao = t.getScreenSize();
+        this.setSize((dimensao.width + 5), (dimensao.height - 38));
+
+ }
 	public void congifurepnTab2(){
 		
 		JScrollPane scroll = new JScrollPane(table);
@@ -102,8 +119,10 @@ public class telaPedido extends JFrame{
 		GBC gbc3 = new GBC(2,6).setSpan(1, 1);//botoes
 		GBC gbc4 = new GBC(3,6).setSpan(1, 1);
 		GBC gbc6 = new GBC(4,6).setSpan(1, 1);//fim botoes
-		GBC gbc7 = new GBC(1,3).setSpan(6, 3);
-		
+		GBC gbc7 = new GBC(1,3).setSpan(6, 1);
+		GBC gbc9 = new GBC(1,1).setSpan(1, 1);
+		GBC gbc10 = new GBC(2,1).setSpan(1, 1);
+		GBC gbc11 = new GBC(3,1).setSpan(1, 1);
 		//GBC gbc10 = new GBC(2,7);
 		
 		//pnTab2.add(pnTab,gbc10);
@@ -116,6 +135,9 @@ public class telaPedido extends JFrame{
 		pnTab2.add(btNovo, gbc4);
 		pnTab2.add(btRemove, gbc6);
 		pnTab2.add(scroll, gbc7);
+		pnTab2.add(lbBuscarP,gbc9);
+		pnTab2.add(txPesquisaP,gbc10);
+		pnTab2.add(btBuscarP,gbc11);
 		//pnTab2.add(btbuscar,gbc8);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
@@ -125,7 +147,7 @@ public class telaPedido extends JFrame{
 		
 		
 		
-		
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		super.setContentPane(pnTab2);
 		super.setVisible(true);
 		super.pack();
@@ -138,13 +160,14 @@ public class telaPedido extends JFrame{
 		GridBagLayout layoutData2 = new GridBagLayout();
 		pnTab.setLayout(layoutData2);
 		GBC gbc9 = new GBC(1,8).setSpan(6, 3);
+		
 		pnTab.add(scroll2,gbc9);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "Itens do Pedido");
 		pnTab.setBorder(border);
 		
-		
+		GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 		//super.setTitle("Tela Cliente");
 		super.setSize(300, 400);
 		super.setContentPane(pnTab);
@@ -306,6 +329,73 @@ public class telaPedido extends JFrame{
 				}
 				
 			}
+			
+			//buscar pedido
+
+				public ArrayList <Pedido> buscaP() throws Exception{
+					
+					if (txPesquisaP.getText().trim().equals("")){
+						JOptionPane.showMessageDialog(null, "Digite o código do pedido!");
+						
+					}
+					
+					
+					//abrindo conexao
+					Statement conex = conectar.conectar();
+					ArrayList<Pedido> retorno = new ArrayList<Pedido>();
+					
+					String sql = "SELECT cod, data, cod_cliente FROM pedido WHERE cod = '" + txPesquisaP.getText() + "'";
+					try{
+						ResultSet rs = conex.executeQuery(sql);
+						while(rs.next()){
+						
+							Pedido ped = new Pedido();
+							ped.setCod(rs.getInt("cod"));
+							ped.setData(rs.getDate("data"));
+							ped.setCod_cliente(rs.getInt("cod_cliente"));
+							retorno.add(ped);
+						}
+					}catch(SQLException e){
+						throw new Exception("Erro ao executar consulta: " + e.getMessage());
+					}
+					
+
+					conectar.desconectar();
+					
+					return retorno;	
+				}
+			
+			
+				//botao buscar 
+				private void configureBtBuscar(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						
+						public void actionPerformed(ActionEvent e) {
+							try {
+								JButtomListarBuscarActionPerfomed(e);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					};
+					
+					btBuscarP.addActionListener(lstAutenticacao);
+				}
+
+				
+				
+				private void JButtomListarBuscarActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+					//dar uma olhada nesse for 
+					model.setColumnIdentifiers(new String[]{"cod","data","cod_cliente"});
+					this.newList = buscaP();
+					for(int i = 0; i< newList.size(); i++){
+						model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getData(), this.newList.get(i).getCod_cliente()});
+					}
+					
+				}
+			
 }
 
 

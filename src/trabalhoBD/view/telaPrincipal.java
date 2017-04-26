@@ -1,6 +1,7 @@
 package trabalhoBD.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,6 +12,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 
 
@@ -30,6 +33,10 @@ public class telaPrincipal extends JFrame {
 	}
 	
 	public void init(){
+		GridBagLayout layoutData3 = new GridBagLayout();
+		pnBase.setLayout(layoutData3);
+		GBC gbc1 = new GBC(3,3);
+		pnBase.add(pnMain,gbc1);
 		
 		configurePnBase();
 		configureBtCliente();
@@ -37,49 +44,39 @@ public class telaPrincipal extends JFrame {
 		configureBtPedidos();
 		configureBtEntrada();
 		
-		/*DEIXAR MELHOR SAPORRA DEPOIS*/
-		pnBase.setLayout(new BorderLayout());
-		pnBase.add(pnMain,BorderLayout.SOUTH);
+		
 		super.setContentPane(pnBase);
-		super.pack();
+		
 		super.setTitle("Tela Principal");
 		super.setVisible(true);
-		super.setPreferredSize(new Dimension(420,250));
+		super.setPreferredSize(new Dimension(320,250));
+		super.pack();
 		super.setLocationRelativeTo(null);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	private void configurePnBase(){
-		pnBase.setLayout(new GridBagLayout());
+		GridBagLayout layoutData3 = new GridBagLayout();
+		pnBase.setLayout(layoutData3);
 		
-		GridBagConstraints restricoes = new GridBagConstraints();
-		restricoes.gridx = 1;
-		restricoes.gridy = 1;
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		pnMain.add(btCli, restricoes);
+		GBC gbc1 = new GBC(3,1).setSpan(3, 1);
+		GBC gbc2 = new GBC(3,2).setSpan(3, 1);
+		GBC gbc3 = new GBC(3,3).setSpan(3, 1);
+		GBC gbc4 = new GBC(3,4).setSpan(3, 1);
 		
-		restricoes.gridx = 2; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
+		pnBase.add(btCli,gbc1);
+		pnBase.add(btPro,gbc2);
+		pnBase.add(btPed,gbc3);
+		pnBase.add(btEntrada,gbc4);
 		
-		pnMain.add(btPro, restricoes);
+		LineBorder colorBorder = new LineBorder(Color.darkGray);
+		TitledBorder border = new TitledBorder(colorBorder, "MENU");
+		pnBase.setBorder(border);
 		
-		restricoes.gridx = 3; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		
-		pnMain.add(btPed, restricoes);
-		
-		restricoes.gridx = 4; //coluna
-		restricoes.gridy = 0; //linha
-		restricoes.gridwidth = 1;
-		restricoes.gridheight = 2;
-		
-		pnMain.add(btEntrada, restricoes);
-		
+		//super.setSize(400, 300);
+		super.setContentPane(pnBase);
+		super.setVisible(true);
+		super.pack();
 	}
 	
 	//tela cliente

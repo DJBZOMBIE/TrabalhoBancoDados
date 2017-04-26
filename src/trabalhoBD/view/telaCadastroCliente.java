@@ -63,7 +63,7 @@ public class telaCadastroCliente extends JFrame{
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.pack();
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	public void configurePnBase(){
 		
@@ -150,22 +150,24 @@ public class telaCadastroCliente extends JFrame{
 							cliente.setEmail(txEmail.getText());
 							cliente.setCpf(txCpf.getText());
 							controller.inserir(cliente);
+							this.dispose();
 							
 							JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
-							//clearFields();
-							this.dispose();
+							
+							
+							
 							
 						}catch(Exception ex){
 							
-							JOptionPane.showMessageDialog(null, "Erro");
+							JOptionPane.showMessageDialog(null, "Campos vazios");
 						}
 						
 					}
 					
 					 public void clearFields() {
-							txNome.setText("");
-							txEmail.setText("");
-							txCpf.setText("");
+							txNome.setText(" ");
+							txEmail.setText(" ");
+							txCpf.setText(" ");
 
 						}
 

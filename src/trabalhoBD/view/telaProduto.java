@@ -35,7 +35,7 @@ public class telaProduto extends JFrame {
 	private ProdutoTableModel model = new ProdutoTableModel(newList);
 	private Conexao conectar;
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por nome)");
+	private JLabel lbCod = new JLabel("Pesquisar (por nome):");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnProd = new JPanel();

@@ -110,7 +110,7 @@ public class telaCadastroProduto extends JFrame{
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
-		//super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	public void configurePnBotao(){
@@ -151,40 +151,6 @@ public class telaCadastroProduto extends JFrame{
 					
 				}
 				
-				//==============================================================================
-			/*	//botao salvar/ PERGUNTAR PQ NÃO DEU CERTO ??????
-
-				private void configureBtSalvar(){
-					ActionListener lstAutenticacao = new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							JButtonSalvarActionPerformed(e);
-							}
-						};
-							btSalvar.addActionListener(lstAutenticacao);
-						}
-						
-						public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){	
-							try{
-							
-								Produto produto = new Produto();
-								produto.setNome(txNome.getText());
-								
-								
-								produto.setSaldo(Integer.parseInt(txSaldo.getText()));
-								produto.setCod_Barras(txCodBar.getText());
-								controller.inserir(produto);
-								
-								JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso");
-								this.dispose();
-								
-							}catch(Exception ex){
-								
-								JOptionPane.showMessageDialog(null, "ERRO");
-							}
-							
-						}*/
-				
 				
 				//conexao
 				public void gambiarra() throws Exception{
@@ -214,8 +180,10 @@ public class telaCadastroProduto extends JFrame{
 						conex.executeUpdate(sql);
 						JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso! " );
 						}catch(SQLException e){
+							
 						throw new Exception("Erro: " + e.getMessage());
 					}
+						conectar.desconectar();
 				}
 				
 				
@@ -251,3 +219,39 @@ public class telaCadastroProduto extends JFrame{
 					}
 
 }
+
+ 
+				//==============================================================================
+			/*	//botao salvar/ PERGUNTAR PQ NÃO DEU CERTO ??????
+
+				private void configureBtSalvar(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							JButtonSalvarActionPerformed(e);
+							}
+						};
+							btSalvar.addActionListener(lstAutenticacao);
+						}
+						
+						public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){	
+							try{
+							
+								Produto produto = new Produto();
+								produto.setNome(txNome.getText());
+								
+								
+								produto.setSaldo(Integer.parseInt(txSaldo.getText()));
+								produto.setCod_Barras(txCodBar.getText());
+								controller.inserir(produto);
+								
+								JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso");
+								this.dispose();
+								
+							}catch(Exception ex){
+								
+								JOptionPane.showMessageDialog(null, "ERRO");
+							}
+							
+						}*/
+				

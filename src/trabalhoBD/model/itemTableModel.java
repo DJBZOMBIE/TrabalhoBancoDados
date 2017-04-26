@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class itemTableModel extends DefaultTableModel {
 	private ArrayList<Item> internalList;
-	private String[] header = new String[] {"cod_pedido", "cod_produto", "quantidade", "cod"};
+	private String[] header = new String[] {"Cod_Pedido", "Cod_Produto", "Quantidade", "Cod_Item"};
 	
 	public itemTableModel(ArrayList<Item> newList){
 		this.internalList = newList;

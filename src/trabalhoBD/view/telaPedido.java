@@ -49,15 +49,16 @@ public class telaPedido extends JFrame{
 	
 	private JTable table = new JTable(model);
 	private JTable table2 = new JTable(model2);
-	//private JLabel lbCod = new JLabel("Pesquisar (por ID)");
-	//private JTextField txCod = new JTextField(20);
+	private JLabel lbBuscar = new JLabel("Verificar itens do Pedido (ID):");
+	private JTextField txPesquisa = new JTextField();
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();
 	private JPanel pnTab2 = new JPanel();
-	private JButton btbuscar = new JButton("Buscar");
+	private JButton btbuscar = new JButton("Verificar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
 	private JButton btRemove = new JButton("Remover");
+	
 	
 	public telaPedido(){
 		this.controller = controller;
@@ -71,7 +72,8 @@ public class telaPedido extends JFrame{
 		configureBtListar();
 		configureBtInserir();
 		configureBtRemover();
-		mouseEventTable();
+		configureDetalhesPedido();
+		//mouseEventTable();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
 		
@@ -94,9 +96,9 @@ public class telaPedido extends JFrame{
 		JScrollPane scroll = new JScrollPane(table);
 		GridBagLayout layoutData = new GridBagLayout();
 		pnTab2.setLayout(layoutData);
-		GBC gbc1 = new GBC(1,1).setSpan(1, 1);
-		GBC gbc2 = new GBC(2,1).setSpan(3, 1);
-		GBC gbc8 = new GBC(5,1).setSpan(1, 1);
+		GBC gbc1 = new GBC(3,8).setSpan(1, 1);
+		GBC gbc2 = new GBC(6,8).setSpan(1, 1);
+		GBC gbc8 = new GBC(4,8).setSpan(1, 1);
 		GBC gbc3 = new GBC(2,6).setSpan(1, 1);//botoes
 		GBC gbc4 = new GBC(3,6).setSpan(1, 1);
 		GBC gbc6 = new GBC(4,6).setSpan(1, 1);//fim botoes
@@ -107,6 +109,9 @@ public class telaPedido extends JFrame{
 		//pnTab2.add(pnTab,gbc10);
 		//pnTab2.add(lbCod, gbc1);
 		//pnTab2.add(txCod, gbc2);
+		pnTab2.add(lbBuscar,gbc1);
+		pnTab2.add(btbuscar,gbc2);
+		pnTab2.add(txPesquisa,gbc8);
 		pnTab2.add(btList, gbc3);
 		pnTab2.add(btNovo, gbc4);
 		pnTab2.add(btRemove, gbc6);
@@ -136,7 +141,7 @@ public class telaPedido extends JFrame{
 		pnTab.add(scroll2,gbc9);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
-		TitledBorder border = new TitledBorder(colorBorder, "Itens do pedido");
+		TitledBorder border = new TitledBorder(colorBorder, "Itens do Pedido");
 		pnTab.setBorder(border);
 		
 		
@@ -182,78 +187,7 @@ public class telaPedido extends JFrame{
 				
 			}
 	
-			//listar itens do pedido ================================ ERRRRROOOORRRRR ========================
 			
-			public void mouseEventTable(){
-				 MouseListener listener = new MouseAdapter(){
-					 
-					 public void mouseClicked(MouseEvent e){
-						 if(e.getClickCount() == 1){
-							 
-							 try {
-								 cliqueTabela();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						 }
-					 }
-					 
-				 };
-				 table.addMouseListener(listener);
-			}
-			
-			
-			public ArrayList<Item> itemList() throws Exception{
-				/*DefaultTableModel modelo = new DefaultTableModel();
-				model.setColumnIdentifiers(new String[]{"Produto", "Preço", "Quantidade"});
-				Pedido pedido = this.newList.get(table.getSelectedRow());
-				for(int i = 0; i< pedido.getCod_item().size(); i++){
-					model2.addRow(new Object[]{pedido.getCod_item().get(i).getCod_produto(), pedido.getCod_item().get(i).getQuantidade(),pedido.getCod_item().get(i).getPreco()});
-					
-				}
-				table2.setModel(modelo);*/
-				
-				Statement conex = conectar.conectar();
-				ArrayList<Item> retorno = new ArrayList<Item>();
-				Pedido pedido = new Pedido();
-				
-				String sql = "SELECT i.cod_pedido, i.cod_produto, i.quantidade, i.cod  FROM item as i where cod = '" + table.getSelectedRow()+ "'";
-				
-				try{
-					ResultSet rs = conex.executeQuery(sql);
-					while(rs.next()){
-						
-						Item item = new Item();
-						
-						item.setCod_pedido(rs.getInt("cod_pedido"));
-						item.setCod_produto(rs.getInt("cod_produto"));
-						item.setQuantidade(rs.getInt("quantidade"));
-						item.setCod(rs.getInt("cod"));
-						retorno.add(item);
-					}
-				}catch(SQLException e){
-					throw new Exception("Erro ao executar consulta: " + e.getMessage());
-				}
-
-				conectar.desconectar();
-				
-				return retorno;	
-					
-				
-			}
-			
-			private void cliqueTabela()throws Exception{
-				model2.setColumnIdentifiers(new String[]{"cod_pedido","cod_produto","quantidade","cod"});
-				this.newList2 = itemList();
-				for(int i = 0; i< newList2.size(); i++){
-					model2.addRow(new Object[]{this.newList2.get(i).getCod_pedido(), this.newList2.get(i).getCod_produto(),this.newList2.get(i).getQuantidade(),this.newList2.get(i).getCod()});
-					
-				}
-				table2.setModel(model2);
-			}
-			
-			//======================================= END ERRRRROORRR =========================
 			
 			//botao Inserir
 			private void configureBtInserir(){
@@ -306,4 +240,145 @@ public class telaPedido extends JFrame{
 					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 			}
+		
+			//busca pedidos anteriores
+			public ArrayList <Item> busca() throws Exception{
+				
+
+				if (txPesquisa .getText().trim().equals("")){
+					JOptionPane.showMessageDialog(null, "campos vazios!");
+					throw new Exception("Campos vazios");
+				}
+				
+				//abrindo conexao
+				Statement conex = conectar.conectar();
+				ArrayList<Item> retorno = new ArrayList<Item>();
+				
+				String sql = "SELECT cod_pedido, cod_produto, quantidade, cod FROM Item WHERE cod_pedido = '" + txPesquisa.getText() + "'";
+				try{
+					ResultSet rs = conex.executeQuery(sql);
+					while(rs.next()){
+					
+						Item item = new Item();
+						item.setCod_pedido(rs.getInt("cod_pedido"));
+						item.setCod_produto(rs.getInt("cod_produto"));
+						item.setQuantidade(rs.getInt("quantidade"));
+						item.setCod(rs.getInt("cod"));
+						retorno.add(item);
+					}
+				}catch(SQLException e){
+					throw new Exception("Erro ao executar consulta: " + e.getMessage());
+				}
+				
+
+				conectar.desconectar();
+				
+				return retorno;	//retorna lista
+			}
+			
+			
+			//botao detalhes do pedido
+			private void configureDetalhesPedido(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					
+					public void actionPerformed(ActionEvent e) {
+						try {
+							JButtomDetalhesActionPerfomed(e);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				};
+				
+				btbuscar.addActionListener(lstAutenticacao);
+			}
+
+			
+			
+			private void JButtomDetalhesActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+				//dar uma olhada nesse for 
+				model2.setColumnIdentifiers(new String[]{"cod_pedido","cod_produto","quantidade","cod"});
+				this.newList2 = busca();
+				for(int i = 0; i< newList2.size(); i++){
+					model2.addRow(new Object[]{this.newList2.get(i).getCod_pedido(), this.newList2.get(i).getCod_produto(),this.newList2.get(i).getQuantidade(),this.newList2.get(i).getCod()});
+				}
+				
+			}
 }
+
+
+/*
+listar itens do pedido ================================ ERRRRROOOORRRRR ========================
+
+public void mouseEventTable(){
+	 MouseListener listener = new MouseAdapter(){
+		 
+		 public void mouseClicked(MouseEvent e){
+			 if(e.getClickCount() == 1){
+				 
+				 try {
+					 cliqueTabela();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			 }
+		 }
+		 
+	 };
+	 table.addMouseListener(listener);
+}
+
+
+public ArrayList<Item> itemList() throws Exception{
+	/*DefaultTableModel modelo = new DefaultTableModel();
+	model.setColumnIdentifiers(new String[]{"Produto", "Preço", "Quantidade"});
+	Pedido pedido = this.newList.get(table.getSelectedRow());
+	for(int i = 0; i< pedido.getCod_item().size(); i++){
+		model2.addRow(new Object[]{pedido.getCod_item().get(i).getCod_produto(), pedido.getCod_item().get(i).getQuantidade(),pedido.getCod_item().get(i).getPreco()});
+		
+	}
+	table2.setModel(modelo);
+	
+	Statement conex = conectar.conectar();
+	ArrayList<Item> retorno = new ArrayList<Item>();
+	Pedido pedido = new Pedido();
+	
+	String sql = "SELECT i.cod_pedido, i.cod_produto, i.quantidade, i.cod  FROM item as i where cod = '" + table.getSelectedRow()+ "'";
+	
+	try{
+		ResultSet rs = conex.executeQuery(sql);
+		while(rs.next()){
+			
+			Item item = new Item();
+			
+			item.setCod_pedido(rs.getInt("cod_pedido"));
+			item.setCod_produto(rs.getInt("cod_produto"));
+			item.setQuantidade(rs.getInt("quantidade"));
+			item.setCod(rs.getInt("cod"));
+			retorno.add(item);
+		}
+	}catch(SQLException e){
+		throw new Exception("Erro ao executar consulta: " + e.getMessage());
+	}
+
+	conectar.desconectar();
+	
+	return retorno;	
+		
+	
+}
+
+private void cliqueTabela()throws Exception{
+	model2.setColumnIdentifiers(new String[]{"cod_pedido","cod_produto","quantidade","cod"});
+	this.newList2 = itemList();
+	for(int i = 0; i< newList2.size(); i++){
+		model2.addRow(new Object[]{this.newList2.get(i).getCod_pedido(), this.newList2.get(i).getCod_produto(),this.newList2.get(i).getQuantidade(),this.newList2.get(i).getCod()});
+		
+	}
+	table2.setModel(model2);
+}*/
+
+

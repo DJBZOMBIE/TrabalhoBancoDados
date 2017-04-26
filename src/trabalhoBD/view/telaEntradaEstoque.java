@@ -28,7 +28,7 @@ public class telaEntradaEstoque extends JFrame {
 	private ArrayList<Produto> newList = new ArrayList<Produto>();
 	private Conexao conectar;
 	
-	private JLabel lbCod = new JLabel("ID do Produto(Desejado):");
+	private JLabel lbCod = new JLabel("ID do Produto (Desejado):");
 	private JLabel lbQuantidade = new JLabel("Quantidade :");
 	
 	private JTextField txCod = new JTextField(10);
@@ -69,7 +69,7 @@ public class telaEntradaEstoque extends JFrame {
 		super.pack();
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 	}
 	

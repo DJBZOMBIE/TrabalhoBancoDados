@@ -43,7 +43,7 @@ public class telaCliente extends JFrame{
 	private telaPrincipal tela = new telaPrincipal();
 	
 	private JTable table = new JTable(model);
-	private JLabel lbCod = new JLabel("Pesquisar (por Nome)");
+	private JLabel lbCod = new JLabel("Pesquisar (por Nome):");
 	private JTextField txCod = new JTextField(20);
 	private JPanel pnBase = new JPanel();
 	private JPanel pnTab = new JPanel();

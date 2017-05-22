@@ -11,7 +11,6 @@ import trabalhoBD.model.Produto;
 
 public class produtoController {
 	
-
 	
 	private ArrayList<Produto> lista;
 	private Conexao conectar;

@@ -63,7 +63,7 @@ public class telaCliente extends JFrame{
 	
 	public void init(){
 		configurePnTab();
-		centralizeFrame(); 
+		//centralizeFrame(); 
 		
 	
 		//configureBtAlterar();
@@ -123,22 +123,6 @@ public class telaCliente extends JFrame{
 		super.setContentPane(pnTab);
 		super.setVisible(true);
 		super.pack();
-	}
-	
-	public void showCliente(Cliente cli) {
-		//converte de int para String
-		txCod.setText(Integer.toString(cli.getCod())); 
-
-    }
-	
-	public void centralizeFrame(){
-		int x, y;
-		
-		Rectangle scr = this.getGraphicsConfiguration().getBounds();
-		Rectangle form = this.getBounds();
-		x = (int) (scr.getWidth() - form.getWidth()) / 2;
-		y = (int) (scr.getHeight() - form.getHeight())/2;
-		this.setLocation(x,y);
 	}
 	
 	

@@ -50,6 +50,8 @@ public class telaCadastroCliente extends JFrame{
 		
 		configureBtCancelar();
 		configureBtSalvar();
+		GridBagLayout layoutData = new GridBagLayout();
+		pnMain.setLayout(layoutData);
 		
 		GBC gbc10 = new GBC(2,2);
 		GBC gbc11 = new GBC(2,5);
@@ -140,7 +142,7 @@ public class telaCadastroCliente extends JFrame{
 						}
 					};
 						btSalvar.addActionListener(lstAutenticacao);
-					}
+				}
 					
 					public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){	
 						try{

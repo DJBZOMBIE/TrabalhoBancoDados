@@ -11,6 +11,7 @@ import trabalhoBD.view.telaCadastroPedido;
 import trabalhoBD.view.telaCadastroProduto;
 import trabalhoBD.view.telaCliente;
 import trabalhoBD.view.telaEntradaEstoque;
+import trabalhoBD.view.telaLogin;
 import trabalhoBD.view.telaPedido;
 import trabalhoBD.view.telaPrincipal;
 import trabalhoBD.view.telaProduto;
@@ -22,7 +23,7 @@ public class Runner {
 		telaCliente screen2 = new telaCliente();
 		telaProduto screen3 = new telaProduto();
 		telaPedido screen4 = new telaPedido();
-		
+		telaLogin log = new telaLogin();
 		//==============
 		telaCadastroCliente cli = new telaCadastroCliente();
 		//telaAlterarCliente cli2 = new telaAlterarCliente();
@@ -32,6 +33,6 @@ public class Runner {
 		telaCadastroPedido cadPedido = new telaCadastroPedido();
 		
 		telaEntradaEstoque entrada = new telaEntradaEstoque();
-		screen.init();
+		log.init();
 	}
 }

@@ -45,7 +45,7 @@ public class telaProduto extends JFrame {
 	//private JButton btAlt = new JButton("Alterar");
 	private JButton btRemove = new JButton("Remover");
 	
-	public telaProduto(){ //tentar modificar depois
+	public telaProduto(){ 
 		this.controller = controller;
 		this.conectar = new Conexao();
 	}

@@ -77,6 +77,7 @@ public class telaCadastroProduto extends JFrame{
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.pack();
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	public void configurePnBase(){
 		
@@ -110,7 +111,7 @@ public class telaCadastroProduto extends JFrame{
 		super.setContentPane(pnBase);
 		super.setVisible(true);
 		super.pack();
-		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 	}
 	
 	public void configurePnBotao(){
@@ -140,13 +141,18 @@ public class telaCadastroProduto extends JFrame{
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JButtonCancelarActionPerformed(e);
+					try {
+						JButtonCancelarActionPerformed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					}
 				};
 					btCancelar.addActionListener(lstAutenticacao);
 				}
 				
-				public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt){	
+				public void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) throws Exception{	
 					this.dispose();
 					
 				}

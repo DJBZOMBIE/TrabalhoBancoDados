@@ -26,7 +26,9 @@ public class telaPrincipal extends JFrame {
 	private JButton btPro = new JButton("Produtos");
 	private JButton btPed = new JButton("Pedidos");
 	private JButton btEntrada = new JButton("Entrada de Estoque");
-	
+	private JButton btFunc = new JButton("Funcionario");
+	private JButton btLogin = new JButton("Controle de Login");
+	private JButton btBackup = new JButton("Backup");
 	
 	public telaPrincipal(){
 		
@@ -43,13 +45,13 @@ public class telaPrincipal extends JFrame {
 		configureBtProdutos();
 		configureBtPedidos();
 		configureBtEntrada();
-		
-		
+		configureBtFuncionario();
+		configureBtControlLogin();
 		super.setContentPane(pnBase);
 		
 		super.setTitle("Tela Principal");
 		super.setVisible(true);
-		super.setPreferredSize(new Dimension(320,250));
+		super.setPreferredSize(new Dimension(320,350));
 		super.pack();
 		super.setLocationRelativeTo(null);
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,11 +65,16 @@ public class telaPrincipal extends JFrame {
 		GBC gbc2 = new GBC(3,2).setSpan(3, 1);
 		GBC gbc3 = new GBC(3,3).setSpan(3, 1);
 		GBC gbc4 = new GBC(3,4).setSpan(3, 1);
-		
+		GBC gbc5 = new GBC(3,5).setSpan(3, 1);
+		GBC gbc6 = new GBC(3,6).setSpan(3, 1);
+		GBC gbc7 = new GBC(3,7).setSpan(3, 1);
 		pnBase.add(btCli,gbc1);
 		pnBase.add(btPro,gbc2);
 		pnBase.add(btPed,gbc3);
 		pnBase.add(btEntrada,gbc4);
+		pnBase.add(btFunc, gbc5);
+		pnBase.add(btLogin, gbc6);
+		pnBase.add(btBackup, gbc7);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "MENU");
@@ -163,9 +170,67 @@ public class telaPrincipal extends JFrame {
 		pnBase.setVisible(true);
 	}
 	
-	public void sair(){
-		telaEntradaEstoque telaEnt = new telaEntradaEstoque();
-		telaEnt.setVisible(false);
-		init();
+	//botao funcionario
+	private void configureBtFuncionario(){
+		ActionListener lstAutenticacao = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButtonFuncionarioPerformed(e);
+			}
+		};
+		
+		btFunc.addActionListener(lstAutenticacao);
 	}
+	
+	public void JButtonFuncionarioPerformed(java.awt.event.ActionEvent evt){
+		telaFuncionario telaEnt = new telaFuncionario();
+		
+		pnBase.setVisible(false);
+		
+		telaEnt.init();
+		pnBase.setVisible(true);
+	}
+	
+	//botao controleLogin
+		private void configureBtControlLogin(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonLoginPerformed(e);
+				}
+			};
+			
+			btLogin.addActionListener(lstAutenticacao);
+		}
+		
+		public void JButtonLoginPerformed(java.awt.event.ActionEvent evt){
+			telaControleLogin telaEnt = new telaControleLogin();
+			
+			pnBase.setVisible(false);
+			
+			telaEnt.init();
+			pnBase.setVisible(true);
+		}
+	
+	//botao backup
+		private void configureBtBackup(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonBackupPerfomed(e);
+				}
+			};
+			
+			btBackup.addActionListener(lstAutenticacao);
+		}
+		
+		public void JButtonBackupPerfomed(java.awt.event.ActionEvent evt){
+			telaBackup telaBackup = new telaBackup();
+			
+			pnBase.setVisible(false);
+			telaBackup.init();
+			pnBase.setVisible(true);
+		}
+		
+
 }

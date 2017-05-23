@@ -47,6 +47,7 @@ public class telaPrincipal extends JFrame {
 		configureBtEntrada();
 		configureBtFuncionario();
 		configureBtControlLogin();
+		configureBtBackup();
 		super.setContentPane(pnBase);
 		
 		super.setTitle("Tela Principal");

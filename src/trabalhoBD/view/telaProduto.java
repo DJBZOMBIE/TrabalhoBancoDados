@@ -42,7 +42,7 @@ public class telaProduto extends JFrame {
 	private JButton btbuscar = new JButton("Buscar");
 	private JButton btList = new JButton("Listar");
 	private JButton btNovo = new JButton("Novo");
-	//private JButton btAlt = new JButton("Alterar");
+	private JButton btAlt = new JButton("Alterar");
 	private JButton btRemove = new JButton("Remover");
 	
 	public telaProduto(){ 
@@ -54,6 +54,7 @@ public class telaProduto extends JFrame {
 		configurePnPro();
 		configureBtListar();
 		configureBtInserir();
+		configuteBtAlterar();
 		configureBtRemover();
 		configureBtBuscar();
 		GridBagLayout layoutData = new GridBagLayout();
@@ -90,8 +91,8 @@ public class telaProduto extends JFrame {
 		pnProd.add(txCod, gbc2);
 		pnProd.add(btList, gbc3);
 		pnProd.add(btNovo, gbc4);
-		//pnProd.add(btAlt, gbc5);
-		pnProd.add(btRemove, gbc5);
+		pnProd.add(btAlt, gbc5);
+		pnProd.add(btRemove, gbc6);
 		pnProd.add(scroll, gbc7);
 		pnProd.add(btbuscar,gbc8);
 		
@@ -164,6 +165,25 @@ public class telaProduto extends JFrame {
 				cadPod.init();
 			}
 			
+			//botao alterar
+			private void configuteBtAlterar(){
+				ActionListener lstAutenticacao = new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JButtomAlterarProdutoActionPerformed();
+						
+					}
+					
+				};
+				btAlt.addActionListener(lstAutenticacao);
+			}
+			
+			private void JButtomAlterarProdutoActionPerformed(){
+				telaAlterarProduto tlProd = new telaAlterarProduto();
+				
+				tlProd.init();
+			}
 			
 			//botao remover
 			private void configureBtRemover(){

@@ -25,7 +25,7 @@ public class telaAlterarCliente extends JFrame{
 	private clienteController controller;
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
 	
-	private JLabel lbCod = new JLabel("Código:");
+	private JLabel lbCod = new JLabel("ID do cliente:");
 	private JLabel lbNome = new JLabel("Nome:");
 	private JLabel lbCpf = new JLabel("CPF:");
 	private JLabel lbEmail = new JLabel("E-Mail:");
@@ -72,22 +72,25 @@ public class telaAlterarCliente extends JFrame{
 		super.setPreferredSize(new Dimension(420,250));
 		super.setLocationRelativeTo(null);
 		super.pack();
-		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	public void configurePnBase(){
 		
 		GridBagLayout layoutData3 = new GridBagLayout();
 		pnBase.setLayout(layoutData3);
 		
-		GBC gbc1 = new GBC(1,1).setSpan(1, 3);
-		GBC gbc2 = new GBC(2,1).setSpan(4, 3);
-		GBC gbc3 = new GBC(1,5).setSpan(1, 3);
-		GBC gbc4 = new GBC(2,5).setSpan(3, 3);
-		GBC gbc5 = new GBC(1,8).setSpan(1, 3);
-		GBC gbc6 = new GBC(2,8).setSpan(6, 3);
+		GBC gbc0 = new GBC(1,1).setSpan(1, 3);
+		GBC gbc01 = new GBC(2,1).setSpan(4, 3);
+		GBC gbc1 = new GBC(1,5).setSpan(1, 3);
+		GBC gbc2 = new GBC(2,5).setSpan(4, 3);
+		GBC gbc3 = new GBC(1,8).setSpan(1, 3);
+		GBC gbc4 = new GBC(2,8).setSpan(3, 3);
+		GBC gbc5 = new GBC(1,11).setSpan(1, 3);
+		GBC gbc6 = new GBC(2,11).setSpan(6, 3);
 	
 		
-		
+		pnBase.add(lbCod,gbc0);
+		pnBase.add(txCod,gbc01);
 		pnBase.add(lbNome,gbc1);
 		pnBase.add(txNome,gbc2);
 		pnBase.add(lbCpf,gbc3);

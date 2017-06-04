@@ -40,6 +40,7 @@ public class telaControleLogin extends JFrame{
 	public void init(){
 		configurePnBase();
 		configureBtCadastrar();
+		configureBtCancelar();
 		
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
@@ -105,4 +106,27 @@ public class telaControleLogin extends JFrame{
 		
 		cadLog.init();
 	}
+	
+	//botao cancelar
+		private void configureBtCancelar(){
+			ActionListener lstAutenticacao = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try{
+						JButtomCancelarLoginActionPerfomed(e);
+					}catch(Exception e1){
+						e1.printStackTrace();
+					}
+					
+				}
+			};
+			pnAlterar.addActionListener(lstAutenticacao);
+		}
+		
+		private void JButtomCancelarLoginActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+			telaAlterarLogin altLog = new telaAlterarLogin();
+			
+			altLog.init();
+		}
 }

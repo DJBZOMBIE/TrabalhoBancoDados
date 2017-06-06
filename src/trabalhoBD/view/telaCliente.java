@@ -138,10 +138,13 @@ public class telaCliente extends JFrame{
 		
 		
 		private void JButtomAlterarClienteActionPerfomed(java.awt.event.ActionEvent evt){
-			telaAlterarCliente cliente = new telaAlterarCliente();
-			
-			
-			cliente.init();
+			try{
+				//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+			telaAlterarCliente altCli = new telaAlterarCliente();
+			altCli.init();
+			}catch(Exception ex){
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
 		}
 		
 		//botao remover cliente

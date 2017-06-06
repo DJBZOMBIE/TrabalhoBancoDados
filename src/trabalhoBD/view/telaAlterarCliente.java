@@ -1,4 +1,4 @@
-package trabalhoBD.view;
+ package trabalhoBD.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import trabalhoBD.model.Cliente;
 
 public class telaAlterarCliente extends JFrame{
 	
-	private clienteController controller;
+	private clienteController controller = new clienteController();
 	private ArrayList<Cliente> newList = new ArrayList<Cliente>();
 	
 	private JLabel lbCod = new JLabel("ID do cliente:");
@@ -30,7 +31,7 @@ public class telaAlterarCliente extends JFrame{
 	private JLabel lbCpf = new JLabel("CPF:");
 	private JLabel lbEmail = new JLabel("E-Mail:");
 	
-	private JTextField txCod = new JTextField(10);
+	private JTextField txCod = new JTextField ();
 	private JTextField txNome = new JTextField(20);
 	private JTextField txCpf= new JTextField(14);
 	private JTextField txEmail= new JTextField(20);
@@ -40,12 +41,10 @@ public class telaAlterarCliente extends JFrame{
 	private JButton btSalvar = new JButton("Salvar");
 	private JButton btCancelar = new JButton("Cancelar");
 	
-	Cliente clienteAlterar;
-	Cliente cliente = new Cliente();
-	
 	
 	public telaAlterarCliente(){
-		this.clienteAlterar = cliente;
+		
+		this.controller = controller;
 		
 	}
 	
@@ -55,7 +54,7 @@ public class telaAlterarCliente extends JFrame{
 		
 		configurePnBase();
 		configurePnBotao();
-		
+		configureBtSalvar();
 		configureBtCancelar();
 		//configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
@@ -144,7 +143,7 @@ public class telaAlterarCliente extends JFrame{
 		this.dispose();
 	}
 	
-	/*//botao salvar
+	//botao salvar
 		private void configureBtSalvar(){
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
@@ -157,19 +156,36 @@ public class telaAlterarCliente extends JFrame{
 		}
 		
 		private void JButtonSalvarActionPerfomed(java.awt.event.ActionEvent evt){
+			int number;
+			String valor;
 			try{
-				
+				Cliente clienteAlterar = new Cliente();
+				try{
+				valor = txCod.getText();
+				number = Integer.parseInt(valor);
+				clienteAlterar.setCod(number);
+				}catch(NumberFormatException ex){
+					JOptionPane.showMessageDialog(null,"Digite apenas numeros"+ex);
+				}
 				clienteAlterar.setNnome(txNome.getText());
 				clienteAlterar.setEmail(txEmail.getText());
 				clienteAlterar.setCpf(txCpf.getText());
 				controller.atualizar(clienteAlterar);
 				
-				JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
-				this.dispose();
+				JOptionPane.showMessageDialog(null, "Cliente alterado com sucesso");
+				clearFields();
 				
-				this.dispose();
 			}catch (Exception ex){
-				JOptionPane.showMessageDialog(null, "erro");
+				
+				JOptionPane.showMessageDialog(null, "erro na alteração"+ex);
 			}
-		}*/
+		}
+	
+		 public void clearFields() {
+			 	txCod.setText(" ");
+				txNome.setText(" ");
+				txEmail.setText(" ");
+				txCpf.setText(" ");
+
+		}
 }

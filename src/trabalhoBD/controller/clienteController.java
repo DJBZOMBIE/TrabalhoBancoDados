@@ -1,5 +1,6 @@
 package trabalhoBD.controller;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,14 +12,15 @@ import javax.swing.JTable;
 import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.ClienteTableModel;
+import trabalhoBD.model.Produto;
 
 public class clienteController {
-	private ArrayList<Cliente> lista;
+	private ArrayList<Cliente> lista = new ArrayList<Cliente>();
 	private Conexao conectar;
 
 	
 	public clienteController(){
-		this.lista = new ArrayList<Cliente>();
+		//this.lista = new ArrayList<Cliente>();
 		this.conectar = new Conexao();
 	}
 	
@@ -136,7 +138,7 @@ public class clienteController {
 	}
 	
 	
-/*	//atualizar cliente
+//atualizar cliente
 	public void atualizar(Cliente cliente) throws Exception{
 		if (cliente == null){
 			throw new Exception("O cliente não foi instanciado");
@@ -164,10 +166,8 @@ public class clienteController {
 		}
 		
 		Statement conex = conectar.conectar();
-		
 		String sql = "UPDATE cliente SET " + " nome = '" + cliente.getNome() + "', " + "email = '" + cliente.getEmail() + "', " + "cpf = '" + cliente.getCpf()+"'"
-				+ "WHERE cpf = '" + cliente.getCpf() + "'";
-		
+				+ "WHERE cod = '" + cliente.getCod() + "'";
 		try{
 			conex.executeUpdate(sql);
 		}catch (SQLException e){
@@ -175,37 +175,20 @@ public class clienteController {
 		}
 		conectar.desconectar();
 		
-		//tirar ou não do programa ?
-		if(this.verificaExistencia(cliente) == -1){
-			throw new Exception("Este cliente não esta cadastrado");
-		}
-		this.lista.set(this.verificaExistencia(cliente), cliente);
+		
 	}
 	
-	*/
-	
-	
-	//voltar nesse metodo depois
-	//pesquisar id do objeto e retornar o indice do objeto
-	public int verificaExistencia(Cliente cliente){
-		int retorno = -1;
-		for(Cliente cli: lista){
-			if(cliente.getCod() == cli.getCod()){
-				retorno = cli.getCod();
-		
-				break;
+	//verificar existencia do produto pelo codigo(id)
+		public int verificaExistencia(Cliente cliente){
+			int retorno = -1;
+			int i;
+			for(i = 0; i< this.lista.size(); i++){
+				if(cliente.getCod() == this.lista.get(i).getCod()){
+					retorno = i;
+					System.out.println("retorno \n"+retorno);
+					break;
+				}
 			}
+			return retorno;
 		}
-		return retorno;
-		
-		/*for(int i = 0; i < this.lista.size(); i++){
-			if(cliente.getCpf().trim().equals(this.lista.get(i).getCpf().trim())){
-				retorno = i;
-				System.out.println("retorno(dentro if):");
-			}
-		}
-		
-		
-		return retorno;*/
-	}
 }

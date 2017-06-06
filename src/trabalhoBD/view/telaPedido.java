@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import trabalhoBD.controller.clienteController;
 import trabalhoBD.controller.pedidoController;
 import trabalhoBD.dao.Conexao;
+import trabalhoBD.dao.ItemControllerDao;
 import trabalhoBD.model.Cliente;
 import trabalhoBD.model.Item;
 import trabalhoBD.model.Pedido;
@@ -42,6 +43,8 @@ import trabalhoBD.model.itemTableModel;
 public class telaPedido extends JFrame{
 	
 	private pedidoController controller = new pedidoController();
+	private ItemControllerDao controller2 = new ItemControllerDao();
+	
 	private ArrayList<Pedido> newList = new ArrayList<Pedido>();
 	private ArrayList<Item> newList2 = new ArrayList<Item>();
 	private ArrayList<Cliente> newListCli = new ArrayList<Cliente>();
@@ -65,6 +68,7 @@ public class telaPedido extends JFrame{
 	private JButton btNovo = new JButton("Novo");
 	private JButton btRemove = new JButton("Remover");
 	private JButton btBuscarP = new JButton("Buscar");
+	private JButton btRemoveItem = new JButton("Remover Item");
 	
 	public telaPedido(){
 		this.controller = controller;
@@ -80,6 +84,7 @@ public class telaPedido extends JFrame{
 		configureBtRemover();
 		configureDetalhesPedido();
 		configureBtBuscar();
+		configureBtRemoverItem();
 		//mouseEventTable();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnBase.setLayout(layoutData);
@@ -160,7 +165,8 @@ public class telaPedido extends JFrame{
 		GridBagLayout layoutData2 = new GridBagLayout();
 		pnTab.setLayout(layoutData2);
 		GBC gbc9 = new GBC(1,8).setSpan(6, 3);
-		
+		GBC gbc = new GBC(3,12).setSpan(1, 1);
+		pnTab.add(btRemoveItem,gbc);
 		pnTab.add(scroll2,gbc9);
 		
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
@@ -259,6 +265,31 @@ public class telaPedido extends JFrame{
 					
 					//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
 				controller.remover(this.newList.get(table.getSelectedRow()));
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+				}
+			}
+			
+		//botao removerItem
+			private void configureBtRemoverItem(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtomRemoverItemActionPerfomed(e);
+					}
+				};
+				
+				btRemoveItem.addActionListener(lstAutenticacao);
+			}
+
+			
+			
+			private void JButtomRemoverItemActionPerfomed(java.awt.event.ActionEvent evt){
+				
+				
+				try{
+					//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+				controller2.remover(this.newList2.get(table2.getSelectedRow()));
 				}catch(Exception ex){
 					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
@@ -395,80 +426,10 @@ public class telaPedido extends JFrame{
 					}
 					
 				}
-			
+		
 }
 
 
-/*
-listar itens do pedido ================================ ERRRRROOOORRRRR ========================
 
-public void mouseEventTable(){
-	 MouseListener listener = new MouseAdapter(){
-		 
-		 public void mouseClicked(MouseEvent e){
-			 if(e.getClickCount() == 1){
-				 
-				 try {
-					 cliqueTabela();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			 }
-		 }
-		 
-	 };
-	 table.addMouseListener(listener);
-}
-
-
-public ArrayList<Item> itemList() throws Exception{
-	/*DefaultTableModel modelo = new DefaultTableModel();
-	model.setColumnIdentifiers(new String[]{"Produto", "Preço", "Quantidade"});
-	Pedido pedido = this.newList.get(table.getSelectedRow());
-	for(int i = 0; i< pedido.getCod_item().size(); i++){
-		model2.addRow(new Object[]{pedido.getCod_item().get(i).getCod_produto(), pedido.getCod_item().get(i).getQuantidade(),pedido.getCod_item().get(i).getPreco()});
-		
-	}
-	table2.setModel(modelo);
-	
-	Statement conex = conectar.conectar();
-	ArrayList<Item> retorno = new ArrayList<Item>();
-	Pedido pedido = new Pedido();
-	
-	String sql = "SELECT i.cod_pedido, i.cod_produto, i.quantidade, i.cod  FROM item as i where cod = '" + table.getSelectedRow()+ "'";
-	
-	try{
-		ResultSet rs = conex.executeQuery(sql);
-		while(rs.next()){
-			
-			Item item = new Item();
-			
-			item.setCod_pedido(rs.getInt("cod_pedido"));
-			item.setCod_produto(rs.getInt("cod_produto"));
-			item.setQuantidade(rs.getInt("quantidade"));
-			item.setCod(rs.getInt("cod"));
-			retorno.add(item);
-		}
-	}catch(SQLException e){
-		throw new Exception("Erro ao executar consulta: " + e.getMessage());
-	}
-
-	conectar.desconectar();
-	
-	return retorno;	
-		
-	
-}
-
-private void cliqueTabela()throws Exception{
-	model2.setColumnIdentifiers(new String[]{"cod_pedido","cod_produto","quantidade","cod"});
-	this.newList2 = itemList();
-	for(int i = 0; i< newList2.size(); i++){
-		model2.addRow(new Object[]{this.newList2.get(i).getCod_pedido(), this.newList2.get(i).getCod_produto(),this.newList2.get(i).getQuantidade(),this.newList2.get(i).getCod()});
-		
-	}
-	table2.setModel(model2);
-}*/
 
 

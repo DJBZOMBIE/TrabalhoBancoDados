@@ -116,14 +116,14 @@ public class produtoController {
 		this.lista.remove(this.verificaExistencia(produto));
 	}
 	
-	/*public void atualizar(Produto produto) throws Exception{
+	public void atualizar(Produto produto) throws Exception{
 		if (produto == null){
 			throw new Exception("O produto não foi instanciado");
 		}
-		if(produto.getCodigoBarras()==null){
+		if(produto.getCod_Barras()==null){
 			throw new Exception("Informar o código de barras do produto");
 		}
-		if(produto.getCodigoBarras().trim().equals("")){
+		if(produto.getCod_Barras().trim().equals("")){
 			throw new Exception("Informar o código de barras do produto");
 		}
 		if(produto.getNome()==null){
@@ -135,14 +135,17 @@ public class produtoController {
 		if(produto.getSaldo()<=0){
 			throw new Exception("O saldo do produto deverá ser superior a zero");
 		}
-		
-		if(this.verificaExistencia(produto)<0){
-			throw new Exception("O produto não esta cadastrado");
+		Statement conex = conectar.conectar();
+		String sql = "UPDATE produto SET " + " nome = '" + produto.getNome() + "', " + "saldo= '" + produto.getSaldo() + "', " + "cod_barras= '" + produto.getCod_Barras()+"'"
+				+ "WHERE cod = '" + produto.getCod() + "'";
+		try{
+			conex.executeUpdate(sql);
+		}catch (SQLException e){
+			throw new Exception("Erro ao executar atualização: " + e.getMessage());
 		}
-		this.lista.set(this.verificaExistencia(produto), produto);
-	}*/
+		conectar.desconectar();
+	}
 	
-	//verificar existencia do produto pelo codigo(id)
 	public int verificaExistencia(Produto produto){
 		int retorno = -1;
 		for(Produto prod:lista){

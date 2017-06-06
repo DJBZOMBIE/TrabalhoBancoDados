@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import trabalhoBD.controller.produtoController;
+import trabalhoBD.model.Cliente;
 import trabalhoBD.model.Produto;
 
 public class telaAlterarProduto extends JFrame{
-	private produtoController controller;
+	private produtoController controller = new produtoController();
 	private ArrayList<Produto> newList = new ArrayList<Produto>();
 	
 	private JLabel lbCod = new JLabel("ID do produto:");
@@ -46,7 +48,7 @@ public class telaAlterarProduto extends JFrame{
 		configurePnBase();
 		configurePnBotao();
 		configuteBtCancelar();
-		
+		configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -132,4 +134,57 @@ public class telaAlterarProduto extends JFrame{
 	private void JButtonCancelarActionPerfomed(){
 		this.dispose();
 	}
+	
+	//botao salvar
+			private void configureBtSalvar(){
+				ActionListener lstAutenticacao = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtonSalvarActionPerfomed(e);
+					}
+				};
+				
+				btSalvar.addActionListener(lstAutenticacao);
+			}
+			
+			private void JButtonSalvarActionPerfomed(java.awt.event.ActionEvent evt){
+				int number, number2;
+				String valor,valor2;
+				try{
+					
+					Produto prodAlterar = new Produto();
+					try{
+					valor = txCod.getText();
+					number = Integer.parseInt(valor);
+					prodAlterar.setCod(number);
+					}catch(NumberFormatException ex){
+						JOptionPane.showMessageDialog(null,"Digite apenas numeros"+ex);
+					}
+					prodAlterar.setNome(txNome.getText());
+					try{
+						valor2 = txSaldo.getText();
+						number2 = Integer.parseInt(valor2);
+						prodAlterar.setSaldo(number2);
+					}catch(NumberFormatException ex){
+						JOptionPane.showMessageDialog(null,"Digite apenas numeros"+ex);
+					}
+					prodAlterar.setCod_Barras(txCodBar.getText());
+					controller.atualizar(prodAlterar);
+					
+					JOptionPane.showMessageDialog(null, "Produto alterado com sucesso");
+					clearFields();
+					
+				}catch (Exception ex){
+					
+					JOptionPane.showMessageDialog(null, "erro na alteração"+ex);
+				}
+			}
+		
+			 public void clearFields() {
+				 	txCod.setText(" ");
+					txNome.setText(" ");
+					txSaldo.setText(" ");
+					txCodBar.setText(" ");
+
+			}
 }

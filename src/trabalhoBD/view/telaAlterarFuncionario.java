@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,7 +25,7 @@ import trabalhoBD.model.funcionarioTableModel;
 
 public class telaAlterarFuncionario extends JFrame{
 	
-	private funcionarioController controller;
+	private funcionarioController controller = new funcionarioController();
 	private ArrayList<Funcionario> newList = new ArrayList<Funcionario>();
 	private Conexao conectar;
 	private Statement connection;
@@ -50,7 +51,7 @@ public class telaAlterarFuncionario extends JFrame{
 		configurePnBase();
 		configurePnBotao();
 		configureBtCancelar();
-		
+		configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -133,5 +134,50 @@ public class telaAlterarFuncionario extends JFrame{
 		
 		private void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) throws Exception{
 			this.dispose();
+		}
+		
+		//botao salvar
+		private void configureBtSalvar(){
+			ActionListener lstAutenticacao = new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtonSalvarActionPerfomed(e);
+					
+				}
+				
+			};
+			btSalvar.addActionListener(lstAutenticacao);
+		}
+		
+		private void JButtonSalvarActionPerfomed(java.awt.event.ActionEvent evt){
+			int number;
+			String valor;
+			try{
+				Funcionario func = new Funcionario();
+				try{
+					valor = txID.getText();
+					number = Integer.parseInt(valor);
+					func.setCod(number);
+				}catch(NumberFormatException ex){
+					JOptionPane.showMessageDialog(null,"Digite apenas numeros no ID"+ex);
+				}
+				func.setNome(txNome.getText());
+				func.setCpf(txCpf.getText());
+				func.setCargo(txCargo.getText());
+				controller.atualizar(func);
+				JOptionPane.showMessageDialog(null, "Funcionario alterado com sucesso");
+				clearFields();
+			}catch (Exception ex){
+				
+				JOptionPane.showMessageDialog(null, "erro na alteração"+ex);
+			}
+		}
+		
+		public void clearFields(){
+			txID.setText("");
+			txNome.setText("");
+			txCpf.setText("");
+			txCargo.setText("");
 		}
 }

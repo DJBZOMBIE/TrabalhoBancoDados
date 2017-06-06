@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import trabalhoBD.model.Usuarios;
 
 public class usuariosControllerDao {
@@ -20,7 +18,24 @@ public class usuariosControllerDao {
 	
 	//listar usuarios
 	public ArrayList <Usuarios> listarTodos() throws Exception{
-		return lista;
+		Statement conex = conectar.conectar();
+		ArrayList<Usuarios> retorno = new ArrayList<Usuarios>();
+		String sql = "SELECT cod, nome, senha, tipo FROM usuarios ORDER BY nome";
+		try{
+			ResultSet rs = conex.executeQuery(sql);
+			while(rs.next()){
+				Usuarios user = new Usuarios();
+				user.setCod(rs.getInt("cod"));
+				user.setNome(rs.getString("nome"));
+				user.setSenha(rs.getString("senha"));
+				user.setTipo(rs.getString("tipo"));
+				retorno.add(user);
+			}
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar consulta: " + e.getMessage());
+		}
+		conectar.desconectar();
+		return retorno;
 	}
 	public void inserir(Usuarios usuarios) throws Exception{
 		if(usuarios == null){
@@ -63,20 +78,71 @@ public class usuariosControllerDao {
 	
 	//remover
 	public void remover (Usuarios usuarios) throws Exception{
-		
-	}
-	public int verificaExistencia(Usuarios usuarios) throws Exception{
-		int retorno = 0;
+		if(usuarios ==null){
+			throw new Exception("O login não foi instanciado");
+		}
+		if(usuarios.getNome()==null){
+			throw new Exception("Informar o nome de usuario");
+		}
+		if(usuarios.getNome().trim().equals("")){
+			throw new Exception("Informar o nome de usuario");
+		}
 		Statement conex = conectar.conectar();
-		
+		String sql = "DELETE FROM usuarios where nome = '" + usuarios.getNome() + "'";
 		try{
-			ResultSet rs = (ResultSet) conex;
-			if(rs.getString("nome").equals(usuarios.getNome())){
-				System.out.println("if");
-				retorno = 1;
-			}
+			//executando a intrução sql
+			conex.execute(sql);
 		}catch(SQLException e){
-			throw new Exception("Erro na verificação");
+			throw new Exception("Erro ao executar remoção: "+e.getMessage());
+		}
+		conectar.desconectar();
+		if(this.verificaExistencia(usuarios)== -1){
+			throw new Exception("Este login não esta mais cadastrado");
+		}
+		this.lista.remove(this.verificaExistencia(usuarios));
+	}
+	
+	public void atualizar(Usuarios usuarios) throws Exception{
+		if(usuarios == null){
+			throw new Exception("O usuario não foi instanciado");
+		}
+		if(usuarios.getNome() == null){
+			throw new Exception("Informar o nome de usuario");
+		}
+		if(usuarios.getNome().trim().equals("")){
+			throw new Exception("Informar o nome de usuario");
+		}
+		if(usuarios.getSenha() == null){
+			throw new Exception("Informar a senha de usuario");
+		}
+		if(usuarios.getSenha().trim().equals("")){
+			throw new Exception("Informar a senha de usuario");
+		}
+		if(usuarios.getTipo() == null){
+			throw new Exception("Informar o tipo de usuario");
+		}
+		if(usuarios.getTipo().trim().equals("")){
+			throw new Exception("Informar o tipo de usuario");
+		}
+		Statement conex = conectar.conectar();
+		String sql = "UPDATE usuarios SET " + " nome = '" + usuarios.getNome() + "', " + usuarios.getSenha() + "', " + "tipo = '" + usuarios.getTipo()+"'"
+				+ "WHERE cod = '" + usuarios.getCod() + "'";
+		try{
+			conex.executeUpdate(sql);
+		}catch (SQLException e){
+			throw new Exception("Erro ao executar atualização: " + e.getMessage());
+		}
+		conectar.desconectar();
+	}
+	
+	public int verificaExistencia(Usuarios usuarios){
+		int retorno = -1;
+		int i;
+		for(i = 0; i< this.lista.size(); i++){
+			if(usuarios.getNome().equals(this.lista.get(i).getNome())){
+				retorno = i;
+				break;
+			}
 		}
 		return retorno;
 	}

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -21,7 +22,7 @@ import trabalhoBD.dao.Conexao;
 import trabalhoBD.model.Funcionario;
 
 public class telaCadastroFuncionario extends JFrame{
-	private funcionarioController controller;
+	private funcionarioController controller = new funcionarioController();
 	private ArrayList<Funcionario> newList = new ArrayList<Funcionario>();
 	private Conexao conectar;
 	private Statement connection;
@@ -53,7 +54,7 @@ public class telaCadastroFuncionario extends JFrame{
 		configurePnBase();
 		configurePnBotao();
 		configureBtCancelar();
-		
+		configureBTSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -136,5 +137,37 @@ public class telaCadastroFuncionario extends JFrame{
 	
 	private void JButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) throws Exception{
 		this.dispose();
+	}
+	
+	private void configureBTSalvar(){
+		ActionListener lstAutenticacao = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButtonSalvarActionPerformed(e);
+			}
+		};
+		btSalvar.addActionListener(lstAutenticacao);
+	}
+	
+	public void JButtonSalvarActionPerformed(java.awt.event.ActionEvent evt){
+		try{
+			Funcionario func = new Funcionario();
+			func.setNome(txNome.getText());
+			func.setCpf(txCpf.getText());
+			func.setCargo(txCargo.getText());
+			controller.inserir(func);
+			JOptionPane.showMessageDialog(null, "Funcionario cadastrado com sucesso");
+			clearFields();
+			
+		}catch(Exception ex){
+			
+			JOptionPane.showMessageDialog(null, "Campos vazios");
+		}
+	}
+	public void clearFields(){
+		txNome.setText("");
+		txCpf.setText("");
+		txCargo.setText("");
 	}
 }

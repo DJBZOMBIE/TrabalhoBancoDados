@@ -185,7 +185,6 @@ public class clienteController {
 			for(i = 0; i< this.lista.size(); i++){
 				if(cliente.getCod() == this.lista.get(i).getCod()){
 					retorno = i;
-					System.out.println("retorno \n"+retorno);
 					break;
 				}
 			}

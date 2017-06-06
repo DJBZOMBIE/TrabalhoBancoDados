@@ -40,7 +40,6 @@ public class telaCliente extends JFrame{
 	private Conexao conectar;
 	
 	private ClienteTableModel model = new ClienteTableModel(newList);
-	private telaPrincipal tela = new telaPrincipal();
 	
 	private JTable table = new JTable(model);
 	private JLabel lbCod = new JLabel("Pesquisar por (ID):");

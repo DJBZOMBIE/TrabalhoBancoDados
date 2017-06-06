@@ -116,7 +116,7 @@ public class telaLogin extends JFrame{
 			ResultSet rs = conex.executeQuery(sql);
 			while(rs.next()){
 				if(rs.getString("senha").equals(txSenha.getText())){
-					telaPrincipal tlPrinc = new telaPrincipal();
+					telaPrincipal tlPrinc = new telaPrincipal(txUser.getText());
 					tlPrinc.init();
 					dispose(); //fechar a tela anterior
 				}else{

@@ -19,7 +19,7 @@ import trabalhoBD.view.telaProduto;
 public class Runner {
 	
 	public static void main (String[] args){
-		telaPrincipal screen = new telaPrincipal();
+		telaPrincipal screen = new telaPrincipal("");
 		telaCliente screen2 = new telaCliente();
 		telaProduto screen3 = new telaProduto();
 		telaPedido screen4 = new telaPedido();

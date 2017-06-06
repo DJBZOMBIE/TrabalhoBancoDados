@@ -8,17 +8,27 @@ import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import trabalhoBD.dao.Conexao;
 
 
 
 public class telaPrincipal extends JFrame {
 	private telaCliente controller2;
+	private Conexao conectar;
+	private JLabel Tipouser = new JLabel("Usuário:");
+	private JLabel user = new JLabel();
 	
 	private JPanel pnBase = new JPanel();
 	private JPanel pnMain = new JPanel();
@@ -30,7 +40,9 @@ public class telaPrincipal extends JFrame {
 	private JButton btLogin = new JButton("Controle de Login");
 	private JButton btBackup = new JButton("Backup");
 	
-	public telaPrincipal(){
+	public telaPrincipal(String usuario){
+		user.setText(usuario);
+		this.conectar = new Conexao();
 		
 	}
 	
@@ -38,8 +50,11 @@ public class telaPrincipal extends JFrame {
 		GridBagLayout layoutData3 = new GridBagLayout();
 		pnBase.setLayout(layoutData3);
 		GBC gbc1 = new GBC(3,3);
-		pnBase.add(pnMain,gbc1);
 		
+		pnBase.add(pnMain,gbc1);
+	
+		
+	
 		configurePnBase();
 		configureBtCliente();
 		configureBtProdutos();
@@ -69,6 +84,9 @@ public class telaPrincipal extends JFrame {
 		GBC gbc5 = new GBC(3,5).setSpan(3, 1);
 		GBC gbc6 = new GBC(3,6).setSpan(3, 1);
 		GBC gbc7 = new GBC(3,7).setSpan(3, 1);
+		GBC gbc8 = new GBC(3,8).setSpan(1, 1);
+		GBC gbc9 = new GBC(4,8).setSpan(1, 1);
+		
 		pnBase.add(btCli,gbc1);
 		pnBase.add(btPro,gbc2);
 		pnBase.add(btPed,gbc3);
@@ -76,7 +94,8 @@ public class telaPrincipal extends JFrame {
 		pnBase.add(btFunc, gbc5);
 		pnBase.add(btLogin, gbc6);
 		pnBase.add(btBackup, gbc7);
-		
+		pnBase.add(user,gbc9);
+		pnBase.add(Tipouser,gbc8);
 		LineBorder colorBorder = new LineBorder(Color.darkGray);
 		TitledBorder border = new TitledBorder(colorBorder, "MENU");
 		pnBase.setBorder(border);
@@ -176,20 +195,37 @@ public class telaPrincipal extends JFrame {
 		ActionListener lstAutenticacao = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JButtonFuncionarioPerformed(e);
+				try {
+					JButtonFuncionarioPerformed(e);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		};
 		
 		btFunc.addActionListener(lstAutenticacao);
 	}
 	
-	public void JButtonFuncionarioPerformed(java.awt.event.ActionEvent evt){
-		telaFuncionario telaEnt = new telaFuncionario();
+	public void JButtonFuncionarioPerformed(java.awt.event.ActionEvent evt) throws Exception{
+		Statement conex = conectar.conectar();
+		try {
+			String sql = "SELECT * From usuarios WHERE nome = '" + user.getText() + "'";
+			ResultSet rs = conex.executeQuery(sql);
+			while(rs.next()){
+			if(rs.getString("tipo").equals("Administrador")){
+				telaFuncionario telaEnt = new telaFuncionario();
+				telaEnt.init();
+			}else{
+				JOptionPane.showMessageDialog(rootPane, "Você não tem permissão para executar essa funcionalidade!\n Contate o adm do Sistema!" );
+			}
+		}
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(rootPane, "Você não tem permissão para executar essa funcionalidade!\n Contate o adm do Sistema!" + ex );
+		}
 		
-		pnBase.setVisible(false);
 		
-		telaEnt.init();
-		pnBase.setVisible(true);
+		
 	}
 	
 	//botao controleLogin
@@ -197,20 +233,34 @@ public class telaPrincipal extends JFrame {
 			ActionListener lstAutenticacao = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					JButtonLoginPerformed(e);
+					try {
+						JButtonLoginPerformed(e);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				}
 			};
 			
 			btLogin.addActionListener(lstAutenticacao);
 		}
 		
-		public void JButtonLoginPerformed(java.awt.event.ActionEvent evt){
-			telaControleLogin telaEnt = new telaControleLogin();
-			
-			pnBase.setVisible(false);
-			
-			telaEnt.init();
-			pnBase.setVisible(true);
+		public void JButtonLoginPerformed(java.awt.event.ActionEvent evt) throws Exception{
+			Statement conex = conectar.conectar();
+			try {
+				
+				String sql = "SELECT * From usuarios WHERE nome = '" + user.getText() + "'";
+				ResultSet rs = conex.executeQuery(sql);
+				while(rs.next()){
+					if(rs.getString("tipo").equals("Administrador")){
+						telaControleLogin telaEnt = new telaControleLogin();
+						telaEnt.init();
+				}else{
+					JOptionPane.showMessageDialog(rootPane, "Você não tem permissão para executar essa funcionalidade!\n Contate o adm do Sistema!" );
+				}
+			} 
+			}catch (Exception ex) {
+				JOptionPane.showMessageDialog(rootPane, "Você não tem permissão para executar essa funcionalidade!\n Contate o adm do Sistema!"+ex );
+			}	
 		}
 	
 	//botao backup

@@ -139,7 +139,7 @@ public class usuariosControllerDao {
 		int retorno = -1;
 		int i;
 		for(i = 0; i< this.lista.size(); i++){
-			if(usuarios.getNome().equals(this.lista.get(i).getNome())){
+			if(usuarios.getTipo()== this.lista.get(i).getTipo()){
 				retorno = i;
 				break;
 			}

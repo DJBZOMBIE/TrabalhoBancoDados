@@ -9,13 +9,17 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import trabalhoBD.dao.usuariosControllerDao;
+import trabalhoBD.model.Usuarios;
+
 public class telaAlterarLogin extends JFrame{
-	
+	private usuariosControllerDao controller = new usuariosControllerDao();
 	private JPanel pnMain = new JPanel();
 	private JPanel pnBase = new JPanel();
 	private JPanel pnBotao = new JPanel();
@@ -42,7 +46,7 @@ public class telaAlterarLogin extends JFrame{
 		configurePnBotao();
 		
 		configureBtCancelar();
-		//configureBtSalvar();
+		configureBtSalvar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -128,4 +132,48 @@ public class telaAlterarLogin extends JFrame{
 	private void JButtonCalcelarActionPerfomed(java.awt.event.ActionEvent evt){
 		this.dispose();
 	}
+	
+	//botao salvar
+			private void configureBtSalvar(){
+				ActionListener lstAutenticacao = new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JButtonSalvarActionPerfomed(e);
+						
+					}
+					
+				};
+				btSalvar.addActionListener(lstAutenticacao);
+			}
+			
+			private void JButtonSalvarActionPerfomed(java.awt.event.ActionEvent evt){
+				int number;
+				String valor;
+				try{
+					Usuarios user = new Usuarios();
+					try{
+						valor = txCod.getText();
+						number = Integer.parseInt(valor);
+						user.setCod(number);
+					}catch(NumberFormatException ex){
+						JOptionPane.showMessageDialog(null,"Digite apenas numeros no ID"+ex);
+					}
+					user.setNome(txNome.getText());
+					user.setSenha(txSenha.getText());
+					user.setTipo(txTipo.getText());
+					controller.atualizar(user);
+					JOptionPane.showMessageDialog(null, "Login alterado com sucesso");
+					clearFields();
+				}catch (Exception ex){
+					
+					JOptionPane.showMessageDialog(null, "erro na alteração"+ex);
+				}
+			}
+			public void clearFields(){
+				txCod.setText("");
+				txNome.setText("");
+				txSenha.setText("");
+				txTipo.setText("");
+			}
 }

@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class funcionarioTableModel extends DefaultTableModel {
 	private ArrayList<Funcionario> internalList;
-	private String [] header = new String [] {"cod", "Nome", "CPF", "Cargo"};
+	private String [] header = new String [] {"Cod", "Nome", "CPF", "Cargo"};
 	
 	public funcionarioTableModel(ArrayList<Funcionario> newlist){
 		this.internalList = newlist;

@@ -21,10 +21,10 @@ import javax.swing.border.TitledBorder;
 
 
 import trabalhoBD.dao.Conexao;
+import trabalhoBD.dao.usuariosControllerDao;
 
 public class telaLogin extends JFrame{
 	private Conexao conectar;
-	
 	private JLabel lbUser = new JLabel("Usuário:");
 	private JLabel lbSenha = new JLabel("Senha:");
 	

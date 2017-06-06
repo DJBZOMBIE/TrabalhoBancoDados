@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -50,7 +54,9 @@ public class telaFuncionario extends JFrame {
 		configurePnBase();
 		configureBtInserir();
 		configureBtAlterar();
-		
+		configureBtRemover();
+		configureBtListar();
+		configureBtBuscar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnTab.setLayout(layoutData);
 		
@@ -146,5 +152,106 @@ public class telaFuncionario extends JFrame {
 			telaAlterarFuncionario AltFunc = new telaAlterarFuncionario();
 			
 			AltFunc.init();
+		}
+		
+		//botao remover
+		private void configureBtRemover(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JButtomRemoverFuncActionPerfomed(e);
+				}
+			};
+			
+			btRemove.addActionListener(lstAutenticacao);
+		}
+		private void JButtomRemoverFuncActionPerfomed(java.awt.event.ActionEvent evt){
+			try{
+				//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+			controller.remover(this.newList.get(table.getSelectedRow()));
+			}catch(Exception ex){
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		}
+		
+		//botao listar
+		private void configureBtListar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				
+				public void actionPerformed(ActionEvent e) {
+					try {
+						JButtomListarFuncActionPerfomed(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			};
+			
+			btList.addActionListener(lstAutenticacao);
+		}
+		private void JButtomListarFuncActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+			//dar uma olhada nesse for 
+			model.setColumnIdentifiers(new String[]{"Cod","Nome","CPF","Cargo"});
+			this.newList = controller.listarTodos();
+			for(int i = 0; i< newList.size(); i++){
+				model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getCpf(), this.newList.get(i).getCargo()});
+			}
+			
+		}
+		
+		//buscar funcionario
+		public ArrayList<Funcionario> busca() throws Exception{
+			if (txCod.getText().trim().equals("")){
+				JOptionPane.showMessageDialog(null, "campos vazios!");
+				
+			}
+			Statement conex = conectar.conectar();
+			ArrayList<Funcionario> retorno = new ArrayList<Funcionario>();
+			String sql = "SELECT cod, nome, cpf, cargo FROM funcionario WHERE cod = '" + txCod.getText() + "'";
+			try{
+				ResultSet rs = conex.executeQuery(sql);
+				while(rs.next()){
+					Funcionario func = new Funcionario();
+					func.setCod(rs.getInt("cod"));
+					func.setNome(rs.getString("nome"));
+					func.setCpf(rs.getString("cpf"));
+					func.setCargo(rs.getString("cargo"));
+					retorno.add(func);
+					
+				}
+		}catch(SQLException e){
+			throw new Exception("Erro ao executar consulta: " + e.getMessage());
+		}
+			conectar.desconectar();
+			
+			return retorno;	
+		}
+		
+		//botao buscar
+		private void configureBtBuscar(){
+			ActionListener lstAutenticacao = new ActionListener() {
+				@Override
+				
+				public void actionPerformed(ActionEvent e) {
+					try {
+						JButtomListarBuscarActionPerfomed(e);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			};
+			
+			btBuscar.addActionListener(lstAutenticacao);
+		}
+		
+		private void JButtomListarBuscarActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+			model.setColumnIdentifiers(new String[]{"Cod","Nome","CPF","Cargo"});
+			this.newList = busca();
+			for(int i = 0; i< newList.size(); i++){
+				model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getCpf(), this.newList.get(i).getCargo()});
+			}
+			
 		}
 }

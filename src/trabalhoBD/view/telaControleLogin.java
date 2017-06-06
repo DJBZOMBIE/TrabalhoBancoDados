@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -40,8 +41,9 @@ public class telaControleLogin extends JFrame{
 	public void init(){
 		configurePnBase();
 		configureBtCadastrar();
-		configureBtCancelar();
-		
+		configureBtAlterar();
+		configureBtRemover();
+		configureBtListar();
 		GridBagLayout layoutData = new GridBagLayout();
 		pnMain.setLayout(layoutData);
 		
@@ -107,8 +109,8 @@ public class telaControleLogin extends JFrame{
 		cadLog.init();
 	}
 	
-	//botao cancelar
-		private void configureBtCancelar(){
+	//botao alterar
+		private void configureBtAlterar(){
 			ActionListener lstAutenticacao = new ActionListener(){
 
 				@Override
@@ -129,4 +131,53 @@ public class telaControleLogin extends JFrame{
 			
 			altLog.init();
 		}
-}
+		
+		//botao remover
+				private void configureBtRemover(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							JButtomRemoverFuncActionPerfomed(e);
+						}
+					};
+					
+					pnRemover.addActionListener(lstAutenticacao);
+				}
+				private void JButtomRemoverFuncActionPerfomed(java.awt.event.ActionEvent evt){
+					try{
+						//this.newList.get(table.getSelectedRow()) serve para pegar um dos clientes que foi listado da jtable
+					controller.remover(this.newList.get(table.getSelectedRow()));
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(null, ex.getMessage());
+					}
+				}
+		
+				//botao listar
+				private void configureBtListar(){
+					ActionListener lstAutenticacao = new ActionListener() {
+						@Override
+						
+						public void actionPerformed(ActionEvent e) {
+							try {
+								JButtomListarFuncActionPerfomed(e);
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					};
+					
+					pnListar.addActionListener(lstAutenticacao);
+				}
+				private void JButtomListarFuncActionPerfomed(java.awt.event.ActionEvent evt) throws Exception{
+					//dar uma olhada nesse for 
+					model.setColumnIdentifiers(new String[]{"Cod","Nome","Senha","Tipo"});
+					this.newList = controller.listarTodos();
+					for(int i = 0; i< newList.size(); i++){
+						model.addRow(new Object[]{this.newList.get(i).getCod(), this.newList.get(i).getNome(),this.newList.get(i).getSenha(), this.newList.get(i).getTipo()});
+					}
+					
+				}
+		
+				
+}				

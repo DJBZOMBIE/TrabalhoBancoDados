@@ -129,7 +129,7 @@ public class telaBackup  extends JFrame{
 					}
 				}
 			};
-			btBakcup.addActionListener(lstAutenticacao);
+			btRestaurar.addActionListener(lstAutenticacao);
 		}
 		
 		private void JButtonRestaurarBackupActionPerformed(java.awt.event.ActionEvent evt) throws Exception{

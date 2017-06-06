@@ -10,10 +10,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class RealizaBackup {
-	
+	JFileChooser open;
 	public RealizaBackup(){
 		
 	}
@@ -24,6 +25,7 @@ public class RealizaBackup {
 	public void backup()throws IOException, InterruptedException{
 		final List<String> comandos = new ArrayList<String>();
 		String dir = "G:\\TrabalhoBancoDados\\BKPCECOM\\";
+		
 		List<String> lista = new ArrayList<String>(9); //guardar os nomes dos backups
 		
 		File diretorio = new File(dir); //passa o diretorio onde esta localizado a pasta de backup
@@ -31,7 +33,7 @@ public class RealizaBackup {
 		File fList[] = diretorio.listFiles(); //pega a lista de backups no diretorio e passa para o vetor
 		
 		if(fList.length == 0){
-			comandos.add("C:\\Program Files\\PostgreSQL\\9.3\\bin\\pg_dump.exe");
+			comandos.add("C:\\Program Files\\PostgreSQL\\9.3\\bin\\pg_dump.exe"); //caminho  do dump do postgress
 			
 			comandos.add("-h");
 			comandos.add("localhost");
@@ -47,7 +49,7 @@ public class RealizaBackup {
 			
 			comandos.add("G:\\TrabalhoBancoDados\\BKPCECOM\\"+1+" "+getDateTime()+".backup");
 			comandos.add("loja");
-			ProcessBuilder pb = new ProcessBuilder(comandos);
+			ProcessBuilder pb = new ProcessBuilder(comandos); //executado com a memoria do pc
 			
 			pb.environment().put("PGPASSWORD", "1234"); //senha do banco
 			
